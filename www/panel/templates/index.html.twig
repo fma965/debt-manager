@@ -1,0 +1,58 @@
+{% include 'header.html.twig' %}
+<div class="row">
+	<div class='well homesections col-12 col-md-12'>
+		<h2>Debts</h2>		
+		<div id="debts-table"  class="table">
+            <table class="table table-striped table-mobile">
+            <thead>
+                <tr>
+                    <th>Debt</th>
+                    <th>Contacts</th>
+                    <th>Total Amount</th>
+                    <th>Remaining Amount</th>
+                    <th>Amount Paid This Month</th>
+                    <th>Monthly Payment Paid?</th>
+                    <th>Last Payment Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for debt in debts %}
+                <tr data-toggle="tooltip" data-placement="left" data-html="true" title="" class=""></tr>
+                    <td><a href='debt.php?id={{ debt.id }}'>{{ debt.debt }}</a></td>	
+                    <td class="col-md-2 col-2"><span class="MobilePrefix">Contact: </span>
+                        <ul class="list-unstyled">
+                            {% for contact in debt.contacts %}
+                            <li><a href='contact.php?id={{ contact.id }}'>{{ contact.name}}</a></li>
+                            {% endfor %}
+                        </ul></td>
+                    <td><span class="MobilePrefix">Total Amount: </span>£{{ debt.start_amount }}</td>
+                    <td><span class="MobilePrefix">Remaining Amount: </span>£{{ debt.amount }}</td>
+                    <td><span class="MobilePrefix">Amount Paid This Month: </span>£{{ debt.payment }}</td>
+                    <td>
+                        <span class="MobilePrefix">Payment Paid: </span>
+                        {% if debt.haspaid == 3 %}
+                            <span class='paidover'>In Excess</span>
+                        {% elseif debt.haspaid == 2 %}
+                            <span class='paidyes'>Yes</span>
+                        {% elseif debt.haspaid == 1 %}
+                            <span class='paidpartial'>Partial</span
+                        {% else %}
+                            <span class='paidno'>No</span>
+                        {% endif %}
+                    </td>
+                    <td><span class="MobilePrefix">Last Payment Date: </span>{{ debt.lastpaymentdate }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div id="contacts-total"><span><strong>Expected Monthly Payment:</strong> £{{ total.expected }}</span><br />
+            <span>
+                <strong>Actual Payment This Month:</strong> 
+                    <span class='{{ total.paid >= total.expected ? 'paidyes' : 'paidno'}}'>£{{ total.paid }}</span>
+                    <br />{{ total.paid >= total.expected ? '' : '(Payment is below expected amount)'}}
+            </span>
+        </div>
+	</div>
+</div>
+{% include 'footer.html.twig' %}

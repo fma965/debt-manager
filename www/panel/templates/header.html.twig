@@ -1,0 +1,41 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Scott Allen's Debt Manager</title>
+		<link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/dataTables.bootstrap.min.css">
+		<link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="/assets/css/style.css" rel="stylesheet"/>
+	</head>
+    <body role="document">
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="true">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a href="/" class="navbar-brand">Scott Allen's Debt Manager</a>
+			</div>
+
+			<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="true">
+			  <ul class="nav navbar-nav">
+				<li><a href="/newcontact.php">New Contact</a></li>
+				<li><a href="/newdebt.php">New Debt</a></li>
+			  </ul>
+			</div>
+		  </div>
+		</nav>
+	    <div class="container-fluid theme-showcase" role="main"> 
+            {% if status.status == "success" and status.message != null %}
+            <div id="status" class="alert alert-success" role="alert">{{ status.message }}</div>
+            {% elseif status.status == "success" %}
+                <div id="status" class="alert alert-success" role="alert">Action completed successfully</div>
+            {% elseif status.status == "error" and status.message != null %}
+                <div id="status" class="alert alert-danger" role="alert">{{ status.message }}</div>
+            {% elseif status.status == "error" %}
+                <div id="status" class="alert alert-danger" role="alert">Error completing action.</div>
+            {% endif %}
