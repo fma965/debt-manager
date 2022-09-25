@@ -1,5 +1,5 @@
 <?php 
-require_once 'autoload.php';
+require_once '../init.php';
 
 // Check if POST contains id, if it does checks what $_POST['type'] is set to then deletes the corresponding entry from the database.
 if (is_numeric($_POST['id'])) {

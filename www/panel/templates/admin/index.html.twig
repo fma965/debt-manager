@@ -1,5 +1,4 @@
 {% include 'header.html.twig' %}
-{% if logged_in == true %}
 <div class="row">
 	<div class='well homesections col-12 col-md-12'>
 		<h2>Debts</h2>		
@@ -56,11 +55,4 @@
         </div>
 	</div>
 </div>
-{% else %}
-<div class="jumbotron">
-    <h1>Welcome to Fma965's Debt Manager</h1>
-    <p>Please log in using your Discord Account to access your account and debt information!</p>
-    <p><a href="/login.php"><button class="btn navbar-btn btn-lg btn-info">Log In With Discord</button></a></p>
-</div>
-{% endif %}
 {% include 'footer.html.twig' %}

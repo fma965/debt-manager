@@ -22,11 +22,22 @@
 			</div>
 
 			<div class="navbar-collapse collapse" id="bs-example-navbar-collapse-1" aria-expanded="true">
-			  <ul class="nav navbar-nav">
-				<li><a href="/newcontact.php">New Contact</a></li>
-				<li><a href="/newdebt.php">New Debt</a></li>
-			  </ul>
-			</div>
+				<ul class="nav navbar-nav">
+					{% if admin == true %}
+					<li><a href="/admin/newcontact.php">New Contact</a></li>
+					<li><a href="/admin/newdebt.php">New Debt</a></li>
+					<li><a href="/admin/index.php">Admin</a></li>
+					{% endif %}
+			  	</ul>		
+				<div class="pull-right">
+					{% if logged_in is empty %}
+					<a href="/login.php"><button class="btn navbar-btn btn-info">Log In With Discord</button></a>
+					{% else %}
+					<a href="/profile.php"><button class="btn navbar-btn btn-info" >Profile</button></a>
+					<a href="/logout.php"><button class="btn navbar-btn btn-danger">Log Out</button></a>
+					{% endif %}
+				</div>
+			</div>			
 		  </div>
 		</nav>
 	    <div class="container-fluid theme-showcase" role="main"> 

@@ -1,5 +1,6 @@
 <?php 
-    require_once 'autoload.php';
+    require_once 'init.php';
+    
     if (!is_numeric($_GET['id']) && !is_numeric($_POST['id'])) {
         die('DEAD');
     }
@@ -65,6 +66,6 @@
     } else {
         $status['status'] = "error";
         $status['message'] = "Invalid ID specified";
-        echo $twig->render('invalid.html.twig', ['status' => $status]);
+        echo $twig->render('invalid.html.twig');
     }
 ?>

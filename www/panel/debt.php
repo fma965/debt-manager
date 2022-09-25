@@ -1,5 +1,6 @@
 <?php
-    require_once 'autoload.php';
+    require_once 'init.php';
+    
     if (!is_numeric($_GET['id']) && !is_numeric($_POST['id'])) {
         die('DEAD');
     }
@@ -34,31 +35,27 @@
     $query = "SELECT * FROM debts WHERE id = $id LIMIT 1;";
     $result = mysqli_query($con, $query);
     $numResults = mysqli_num_rows($result);
+    $alltransactions = [];
     if ($numResults > 0) {
         while ($debt = mysqli_fetch_assoc($result)) {
-            
+            $totalpaidthismonth = 0;
             $query2 = "SELECT * FROM `transactions` WHERE `reference` = '".$debt['reference']."' ORDER BY `created` DESC;";
             $sqltran2 = mysqli_query($con, $query2);
             $transactions = mysqli_fetch_all($sqltran2, MYSQLI_ASSOC);
             foreach ($transactions as $transaction ) {
                 if ($transaction['created'] > $first && $transaction['created'] < $last) $totalpaidthismonth += $transaction['amount'];
-                $transaction['created'] = formatDate($transaction['created']);
-                $transaction['amount'] = number_format($transaction['amount'], 2);
-                $transactions[] = $transaction;
+                $alltransactions[] = $transaction;
             }
             $details['id'] = $debt['id'];
             $details['debt'] = $debt['debt'];
             $details['reference'] = $debt['reference'];
-            $details['start_amount'] = number_format($debt['start_amount'], 2);
-            $details['amount'] = number_format($debt['amount'], 2);
-            $details['payment'] = number_format($debt['payment'], 2);
-            $details['details'] = nl2br($debt['details']);
+            $details['details'] = $debt['details'];
         }
-        echo $twig->render('debt.html.twig', ['transactions' => $transactions, 'details' => $details, 'status' => $status]);
+        echo $twig->render('debt.html.twig', ['transactions' => $alltransactions, 'details' => $details, 'status' => $status]);
     } else {
         $status['status'] = "error";
         $status['message'] = "Invalid ID specified";
-        echo $twig->render('invalid.html.twig', ['status' => $status]);
+        echo $twig->render('invalid.html.twig');
     }
     
 ?>

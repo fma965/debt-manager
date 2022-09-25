@@ -5,21 +5,25 @@
 	};
 
 	// Database Credentials
-	$db_host		= "localhost";
+	$db_host		= "";
 	$db_user		= "";
 	$db_pass		= "";
 	$db_database	= ""; 
 	
 	// Starling Configuration
-	$secret = ""; 
-	$token = "";
-	$starlingaccount = "";
+	define("STARLING_WEBHOOK_SECRET","");
 	
 	// Other Configuration Options
 	$startdate = 1;
 	$finishdate = 31;
 	
 	$discord_webhook = "";
+    
+    // Discord OAuth
+	$discord_redirect_url = "";
+	$discord_admin_id = "";
+	$discord_client_id = "";
+	$discord_client_secret = "";
 	
 	// Establish DB connection
 	$con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);

@@ -1,5 +1,6 @@
 <?php 
-    require_once 'autoload.php';
+    require_once '../init.php';
+	
 	if (isset($_POST['submit'])) {
 		$name = mysqli_real_escape_string($con,$_POST['name']);
 		$start_amount = mysqli_real_escape_string($con,$_POST['start_amount']);
@@ -17,5 +18,5 @@
 			$status['message'] = "Error creating Debt: " . mysqli_error($con);
 		}
 	} 
-	echo $twig->render('newdebt.html.twig', ['status' => $status]);
+	echo $twig->render('admin/newdebt.html.twig');
 ?>
