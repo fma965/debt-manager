@@ -17,11 +17,12 @@ session_start();
 if(isset($_SESSION['userData'])) {
     $twig->addGlobal('logged_in', $_SESSION['logged_in']);
     $twig->addGlobal('admin', $_SESSION['admin']);
-    if(dirname($_SERVER['SCRIPT_NAME']) == "/admin" && !$_SESSION['admin']) {
+    
+    if((dirname($_SERVER['SCRIPT_NAME']) == "/admin" || $_SERVER['SCRIPT_NAME'] == "/user.php") && !$_SESSION['admin']) {
         echo $twig->render('unauthorized.html.twig');
         exit();
     }
 } elseif(dirname($_SERVER['SCRIPT_NAME']) == "/admin" || (dirname($_SERVER['SCRIPT_NAME']) == "/" && basename($_SERVER['PHP_SELF']) != "index.php")) {
-    header("Location: /login.php");
+    header("Location: /");
 } 
 ?>

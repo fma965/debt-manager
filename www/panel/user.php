@@ -33,24 +33,35 @@
     }
     $debts = [];
     $alldebts = [];
-    $details = [];
     $id = mysqli_real_escape_string($con,$_GET['id']);
-    $discord_id = $_SESSION['userData']['discord_id'];
     $remaining = 0; 
 
-    $query = "SELECT * FROM debts INNER JOIN user_debts ON debts.id = user_debts.debt_id INNER JOIN users ON users.id = user_debts.user_id WHERE users.id = $id;";
+    $query = "SELECT * FROM users WHERE id = $id LIMIT 1;";
     $result = mysqli_query($con, $query);
     $numResults = mysqli_num_rows($result);
     if ($numResults > 0) {
-        while ($debt = mysqli_fetch_assoc($result)) {
-            if($debt['discord_id'] == $discord_id || $_SESSION['admin']) {						
-                $remaining +=$debt['amount'];
-                $details = $debt;
-                $details['total_cost'] = $remaining;
+        while ($user = mysqli_fetch_assoc($result)) {
+            $query = "SELECT * FROM `debts`;";
+            $sqltran = mysqli_query($con, $query);
+            if ($result = mysqli_query($con, $query)) {
+                $alldebts = mysqli_fetch_all($sqltran, MYSQLI_ASSOC);
             }
-            $debts[] = $debt;
+
+            $query = "SELECT * FROM user_debts INNER JOIN debts ON debts.id=user_debts.debt_id WHERE user_id = ".$user['id'].";";
+            $result = mysqli_query($con, $query);
+            if (mysqli_num_rows($result) !== 0) {
+                $debts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                foreach ($debts as $debt ) {						
+                    $remaining +=$debt['amount'];
+                }
+            }
+            $details = $user;
+            $details['total_cost'] = $remaining;
         }
+        echo $twig->render('user.html.twig', ['alldebts' => $alldebts, 'debts' => $debts, 'details' => $details, 'status' => $status]);
+    } else {
+        $status['status'] = "error";
+        $status['message'] = "Invalid ID specified";
+        echo $twig->render('invalid.html.twig');
     }
-    echo $twig->render('user.html.twig', ['alldebts' => $alldebts, 'debts' => $debts, 'details' => $details, 'status' => $status]);
-    
 ?>

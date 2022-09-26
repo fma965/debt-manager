@@ -24,7 +24,7 @@
 					<div class='well well-sm debts'><Strong>Debts: </Strong>
                         <select id='placeholder' multiple class='form-control' name="debts[]">
                             {% for debt in alldebts %}
-                                <option value="{{ debt.id }}">{{ debt.debt }}</option>
+                                <option value="{{ debt.id }}">{{ debt.debt }} (ID:{{ debt.id }})</option>
                             {% endfor %}
                         </select>
                         {% if debts is not empty %}
@@ -32,7 +32,7 @@
                             <div class="debt">
                                 <div class="row" >
                                     <div class=" col-12 col-md-6" >
-                                        <span class="debt-name inline" data-id="{{ debt.id }}">{{ debt.debt }}</span>
+                                        <span class="debt-name inline" data-id="{{ debt.id }}">{{ debt.debt }} </span>
                                     </div>
                                 </div>
                             </div>
