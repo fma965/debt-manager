@@ -1,12 +1,8 @@
 <?php
     require_once 'init.php';
-    
-    if (!is_numeric($_GET['id']) && !is_numeric($_POST['id'])) {
-        die('DEAD');
+    if (!isset($_REQUEST['id']) || isset($_REQUEST['id']) && !is_numeric($_REQUEST['id'])) {
+        header("Location: /");
     }
-    
-    $status['status'] = isset($_GET['status']) ? $_GET['status'] : "";
-    $status['message'] = isset($_GET['message']) ? $_GET['message'] : "";
    
     if (isset($_POST['submit'])) {
         $name = mysqli_real_escape_string($con,$_POST['name']);
@@ -29,33 +25,30 @@
 
     $first = mktime(0,0,0,date('n'),$startdate,date('Y'));
     $last = mktime(23,59,59,(date('n') + 1 ), $finishdate,date('Y'));
+    
+    $alltransactions = [];
+    $details = [];
 
     $id = mysqli_real_escape_string($con,$_GET['id']);
-
-    $query = "SELECT * FROM debts WHERE id = $id LIMIT 1;";
+    $discord_id = $_SESSION['userData']['discord_id'];
+    $query = "SELECT debts.*, users.discord_id FROM debts INNER JOIN user_debts ON debts.id = user_debts.debt_id INNER JOIN users ON users.id = user_debts.user_id WHERE debts.id = $id";
     $result = mysqli_query($con, $query);
     $numResults = mysqli_num_rows($result);
-    $alltransactions = [];
     if ($numResults > 0) {
         while ($debt = mysqli_fetch_assoc($result)) {
-            $totalpaidthismonth = 0;
-            $query2 = "SELECT * FROM `transactions` WHERE `reference` = '".$debt['reference']."' ORDER BY `created` DESC;";
-            $sqltran2 = mysqli_query($con, $query2);
-            $transactions = mysqli_fetch_all($sqltran2, MYSQLI_ASSOC);
-            foreach ($transactions as $transaction ) {
-                if ($transaction['created'] > $first && $transaction['created'] < $last) $totalpaidthismonth += $transaction['amount'];
-                $alltransactions[] = $transaction;
+            if($debt['discord_id'] == $discord_id || $_SESSION['admin']) {
+                $totalpaidthismonth = 0;
+                $query2 = "SELECT * FROM `transactions` WHERE `reference` = '".$debt['reference']."' ORDER BY `created` DESC;";
+                $sqltran2 = mysqli_query($con, $query2);
+                $transactions = mysqli_fetch_all($sqltran2, MYSQLI_ASSOC);
+                foreach ($transactions as $transaction ) {
+                    if ($transaction['created'] > $first && $transaction['created'] < $last) $totalpaidthismonth += $transaction['amount'];
+                    $alltransactions[] = $transaction;
+                }
+                $details = $debt;
             }
-            $details['id'] = $debt['id'];
-            $details['debt'] = $debt['debt'];
-            $details['reference'] = $debt['reference'];
-            $details['details'] = $debt['details'];
         }
-        echo $twig->render('debt.html.twig', ['transactions' => $alltransactions, 'details' => $details, 'status' => $status]);
-    } else {
-        $status['status'] = "error";
-        $status['message'] = "Invalid ID specified";
-        echo $twig->render('invalid.html.twig');
+        
     }
-    
+    echo $twig->render('debt.html.twig', ['transactions' => $alltransactions, 'details' => $details, 'status' => $status]);#
 ?>

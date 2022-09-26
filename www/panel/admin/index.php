@@ -14,10 +14,11 @@
         $paid = 0;
         $id = mysqli_real_escape_string($con,$debt['id']);	
         
-        $query = "SELECT * FROM contact_debts INNER JOIN contacts ON contacts.id=contact_debts.contact_id WHERE debt_id = $id;";
-        $contactresult = mysqli_query($con, $query)or die(mysqli_error($con));
-        while ($contact = mysqli_fetch_array($contactresult)) {
-            $debt['contacts'][] = ["name" => $contact['name'], "id" => $contact['id']];
+        $query = "SELECT * FROM user_debts INNER JOIN users ON users.id=user_debts.user_id WHERE debt_id = $id;";
+        
+        $userresult = mysqli_query($con, $query)or die(mysqli_error($con));
+        while ($user = mysqli_fetch_array($userresult)) {
+            $debt['users'][] = ["name" => $user['name'], "id" => $user['id']];
         }
         $query = "SELECT * FROM transactions WHERE `reference` = '".$debt['reference']."' ORDER BY `created` DESC;";
         $transactionres = mysqli_query($con, $query)or die(mysqli_error($con));
@@ -40,5 +41,11 @@
 
     $total = ['paid' => $paid, 'expected' => $totalmonthlyamount];
 
-    echo $twig->render('admin/index.html.twig', ['debts' => $debts, 'total' => $total]);
+    $query = "SELECT * FROM users ORDER by ID DESC;";
+    $userresult = mysqli_query($con, $query)or die(mysqli_error($con));
+    while ($user = mysqli_fetch_assoc($userresult)) {
+        $users[] = $user;
+    }
+
+    echo $twig->render('admin/index.html.twig', ['debts' => $debts, 'users' => $users, 'total' => $total]);
 ?>

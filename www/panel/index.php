@@ -1,46 +1,56 @@
 <?php
+
     require_once 'init.php';
-    if(!isset($_SESSION['userData'])) {
-        echo $twig->render('index.html.twig');
-    } else {
-        $totalmonthlyamount = 0;
-    
-        $first_day = mktime(0,0,0,date('n'),$startdate,date('Y'));
-        $last_day = mktime(23,59,59,(date('n') + 1 ), $finishdate,date('Y'));
+    if(isset($_SESSION['userData'])) {
+        extract($_SESSION['userData']);
 
-        $query = "SELECT * FROM debts ORDER by ID DESC;";
-        $debtresult = mysqli_query($con, $query)or die(mysqli_error($con));
-        while ($debt = mysqli_fetch_assoc($debtresult)) {
-            $lastpaymentdate = 0;
-            $paid = 0;
-            $id = mysqli_real_escape_string($con,$debt['id']);	
-            
-            $query = "SELECT * FROM contact_debts INNER JOIN contacts ON contacts.id=contact_debts.contact_id WHERE debt_id = $id;";
-            $contactresult = mysqli_query($con, $query)or die(mysqli_error($con));
-            while ($contact = mysqli_fetch_array($contactresult)) {
-                $debt['contacts'][] = ["name" => $contact['name'], "id" => $contact['id']];
+        if (isset($_POST['submit'])) {  
+            $name = mysqli_real_escape_string($con,$_POST['name']);
+            $query = "UPDATE users SET name='$name' WHERE discord_id = $discord_id;";
+            if (mysqli_query($con, $query)) {
+                $status['status'] = "success";
+                $status['message'] = "Profile updated successfully";
+            } else {
+                $status['status'] = "error";
+                $status['message'] = "Error updating profile: " . mysqli_error($con);
             }
-            $query = "SELECT * FROM transactions WHERE `reference` = '".$debt['reference']."' ORDER BY `created` DESC;";
-            $transactionres = mysqli_query($con, $query)or die(mysqli_error($con));
-            while ($transaction = mysqli_fetch_array($transactionres)) {
-                if ($transaction['created'] > $first_day && $transaction['created'] < $last_day) $paid += $transaction['amount'];
-                if ($lastpaymentdate == 0) $lastpaymentdate = $transaction['created'];
-            }
-            $monthlyamount = number_format($debt['payment'],2);
-            $debt['payment'] = $paid;
-
-            if($paid != $monthlyamount) {
-                $debt['payment'] .= " / £" . $monthlyamount;
-            }
-            $debt['haspaid'] = HasPaid($paid,$monthlyamount);
-
-            $totalmonthlyamount += $monthlyamount;
-
-            $debts[] = $debt;
         }
 
-        $total = ['paid' => $paid, 'expected' => $totalmonthlyamount];
+        $debts = [];
+        $alldebts = [];
+        $remaining = 0; 
 
-        echo $twig->render('index.html.twig', ['debts' => $debts, 'total' => $total]);
+        $query = "SELECT * FROM users WHERE discord_id = $discord_id LIMIT 1;";
+        $result = mysqli_query($con, $query);
+        $numResults = mysqli_num_rows($result);
+        if ($numResults > 0) {
+            while ($user = mysqli_fetch_assoc($result)) {
+                $query = "SELECT * FROM `debts`;";
+                $sqltran = mysqli_query($con, $query);
+                if ($result = mysqli_query($con, $query)) {
+                    $alldebts = mysqli_fetch_all($sqltran, MYSQLI_ASSOC);
+                }
+
+                $query = "SELECT * FROM user_debts INNER JOIN debts ON debts.id=user_debts.debt_id WHERE user_id = ".$user['id'].";";
+                $result = mysqli_query($con, $query);
+                if (mysqli_num_rows($result) !== 0) {
+                    $debts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                    foreach ($debts as $debt ) {				
+                        $remaining +=$debt['amount'];
+                    }
+                }
+                $details = $user;
+                $details['total_cost'] = $remaining;
+            }
+        } else {
+            $status['status'] = "error";
+            $status['message'] = "No matching user found";
+            echo $twig->render('wrapper.html.twig', ['status' => $status]);
+        }
+        echo $twig->render('index.html.twig', ['userData' => $_SESSION['userData'], 'alldebts' => $alldebts, 'debts' => $debts, 'details' => $details, 'status' => $status]);
+    } else {
+        echo $twig->render('index.html.twig');
     }
+
+
 ?>

@@ -17,6 +17,8 @@
 			$status['status'] = "error";
 			$status['message'] = "Error creating Debt: " . mysqli_error($con);
 		}
-	} 
-	echo $twig->render('admin/newdebt.html.twig');
+		header("Location: /admin/?status=".$status['status']."&message=".$status['message']);
+	} else {
+		echo $twig->render('admin/newdebt.html.twig');
+	}
 ?>

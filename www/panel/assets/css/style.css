@@ -74,7 +74,7 @@ a:hover {
 
 
 @media only screen and (max-width: 480px), (max-device-width: 1024px)  {
-	#contacts-total, #expenses-total {
+	#users-total, #expenses-total {
 		text-align: center;
 	}
 
@@ -118,11 +118,11 @@ a:hover {
 			font-size: 2.5rem;
 	}
 	
-	#contact-table td:nth-of-type(2):before { content: "debts:"; }
-	#contact-table td:nth-of-type(3):before { content: "Charge:"; }
-	#contact-table td:nth-of-type(4):before { content: "Paid this Month:"; }
-	#contact-table td:nth-of-type(5):before { content: "Fully Paid:"; }
-	#contact-table td:nth-of-type(6):before { content: "Last Payment Date: "; }
+	#user-table td:nth-of-type(2):before { content: "debts:"; }
+	#user-table td:nth-of-type(3):before { content: "Charge:"; }
+	#user-table td:nth-of-type(4):before { content: "Paid this Month:"; }
+	#user-table td:nth-of-type(5):before { content: "Fully Paid:"; }
+	#user-table td:nth-of-type(6):before { content: "Last Payment Date: "; }
 
 	
 	.expense-table td:nth-of-type(2):before { content: "Monthly Cost:"; }

@@ -5,14 +5,18 @@ require_once '../init.php';
 if (is_numeric($_POST['id'])) {
 	$id = mysqli_real_escape_string($con,$_POST['id']);
 	switch ($_POST['type']) {
-		case "contact":
-			$query = "DELETE FROM contact_debts WHERE contact_id = $id;";
+		case "user":
+			$query = "DELETE FROM user_debts WHERE user_id = $id;";
 			if (!mysqli_query($con, $query)) {
-				header("Location: /?status=error&message=" . $con->error);
+				header("Location: /admin/?status=error&message=" . $con->error);
 			}		
-			$query = "DELETE FROM contacts WHERE id = $id;";
+			$query = "DELETE FROM users WHERE id = $id;";
 			break;
 		case "debt":
+			$query = "DELETE FROM user_debts WHERE debt_id = $id;";
+			if (!mysqli_query($con, $query)) {
+				header("Location: /admin/?status=error&message=" . $con->error);
+			}	
 			$query = "DELETE FROM debts WHERE id = $id;";
 			break;
 		default:
@@ -20,9 +24,9 @@ if (is_numeric($_POST['id'])) {
 	}
 	
 	if (mysqli_query($con, $query)) {
-		header("Location: /?status=success&message=Action completed successfully");
+		header("Location: /admin/?status=success&message=".ucfirst($_POST['type'])." deleted successfully");
 	} else {
-		header("Location: /?status=error&message=" . $con->error);
+		header("Location: /admin/?status=error&message=" . $con->error);
 	}
 }
 ?>
