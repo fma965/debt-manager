@@ -22,11 +22,11 @@ if (is_numeric($_POST['id'])) {
 		default:
 			die("Error");
 	}
-	
 	if (mysqli_query($con, $query)) {
 		header("Location: /admin/?status=success&message=".ucfirst($_POST['type'])." deleted successfully");
 	} else {
 		header("Location: /admin/?status=error&message=" . $con->error);
 	}
 }
+
 ?>

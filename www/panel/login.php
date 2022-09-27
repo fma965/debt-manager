@@ -2,7 +2,7 @@
     require '/app/inc/config.php';
     
     if(!isset($_GET['code'])) {
-        header("Location: $discord_redirect_url");
+        header("Location: https://discord.com/api/oauth2/authorize?client_id=".DISCORD_CLIENT_ID."&redirect_uri=" . urlencode(HOST . "/login.php"). "&response_type=code&scope=identify");
         exit();
     }
 
@@ -10,10 +10,10 @@
 
     $payload = [
         'code'=>$discord_code,
-        'client_id'=>$discord_client_id,
-        'client_secret'=>$discord_client_secret,
+        'client_id'=>DISCORD_CLIENT_ID,
+        'client_secret'=>DISCORD_CLIENT_SECRET,
         'grant_type'=>'authorization_code',
-        'redirect_uri'=>'https://debtmanager.fma965.casa/login.php',
+        'redirect_uri'=> HOST.'/login.php',
         'scope'=>'identify',
     ];
 
@@ -54,7 +54,7 @@
     session_start();
 
     $_SESSION['logged_in'] = true;
-    $_SESSION['admin'] = $result['id'] == $discord_admin_id;
+    $_SESSION['admin'] = $result['id'] == DISCORD_ADMIN;
     $_SESSION['userData'] = [
         'name'=>$result['username'],
         'discord_id'=>$result['id'],

@@ -4,32 +4,28 @@
 		exit();
 	};
 
+	// Website Configuration
+	define('HOST', 						'');
+
 	// Database Credentials
-	$db_host		= "";
-	$db_user		= "";
-	$db_pass		= "";
-	$db_database	= ""; 
-	
-	// Starling Configuration
-	define("STARLING_WEBHOOK_SECRET","");
-	
-	// Other Configuration Options
-	$startdate = 1;
-	$finishdate = 31;
-	
-	$discord_webhook = "";
+	define('DB_HOST', 					'');
+	define('DB_USER', 					'');
+	define('DB_PASS', 					'');
+	define('DB_NAME', 					''); 
+
+	// Starling Credentials
+	define('STARLING_WEBHOOK_SECRET',	'');	
     
-    // Discord OAuth
-	$discord_redirect_url = "";
-	$discord_admin_id = "";
-	$discord_client_id = "";
-	$discord_client_secret = "";
+    // Discord Credentials
+	define('DISCORD_CLIENT_ID',    		'');
+	define('DISCORD_CLIENT_SECRET',		'');
+	define('DISCORD_ADMIN', 	   		'');
+	define('DISCORD_WEBHOOK', 			'');
 	
 	// Establish DB connection
-	$con = mysqli_connect($db_host, $db_user, $db_pass, $db_database);
+	$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 	if (mysqli_connect_errno()) {
 		echo "Failed to connect to MySQL: " . mysqli_connect_error();
+		exit();
 	}
-	
-	error_reporting(E_ALL^E_NOTICE);
 ?>

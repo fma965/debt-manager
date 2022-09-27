@@ -4,8 +4,8 @@
 
     $totalmonthlyamount = 0;
     
-    $first_day = mktime(0,0,0,date('n'),$startdate,date('Y'));
-	$last_day = mktime(23,59,59,(date('n') + 1 ), $finishdate,date('Y'));
+    $first_day = mktime(0,0,0,date('n'),1,date('Y'));
+	$last_day = mktime(23,59,59,(date('n') + 1 ), 31,date('Y'));
 
     $query = "SELECT * FROM debts ORDER by ID DESC;";
     $debtresult = mysqli_query($con, $query)or die(mysqli_error($con));

@@ -17,14 +17,14 @@
 		}
 	}
 
-	function discord_notification($json,$discord_webhook) {
-		$ch = curl_init( $discord_webhook );
-		curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-		curl_setopt( $ch, CURLOPT_POST, 1);
-		curl_setopt( $ch, CURLOPT_POSTFIELDS, $json);
-		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt( $ch, CURLOPT_HEADER, 0);
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
-		return curl_exec( $ch );
-	}
+	// function discord_notification($json) {
+	// 	$ch = curl_init( DISCORD_WEBHOOK );
+	// 	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+	// 	curl_setopt( $ch, CURLOPT_POST, 1);
+	// 	curl_setopt( $ch, CURLOPT_POSTFIELDS, $json);
+	// 	curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1);
+	// 	curl_setopt( $ch, CURLOPT_HEADER, 0);
+	// 	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1);
+	// 	return curl_exec( $ch );
+	// }
 ?>

@@ -23,8 +23,8 @@
         }
     } 
 
-    $first = mktime(0,0,0,date('n'),$startdate,date('Y'));
-    $last = mktime(23,59,59,(date('n') + 1 ), $finishdate,date('Y'));
+    $first = mktime(0,0,0,date('n'),1,date('Y'));
+    $last = mktime(23,59,59,(date('n') + 1 ), 31,date('Y'));
     
     $alltransactions = [];
     $details = [];
