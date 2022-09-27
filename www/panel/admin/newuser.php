@@ -2,37 +2,25 @@
 	require_once '../init.php';
 	
 	if (isset($_POST['submit'])) {
-		$name = mysqli_real_escape_string($db,$_POST['name']);
-		$notes = mysqli_real_escape_string($db,$_POST['notes']);
-		
-		$query = "INSERT INTO users (name, notes) VALUES ('$name', '$notes');";
-		if (mysqli_query($db, $query)) {
-			$status['status'] = "success";
-			$status['message'] = "User created successfully";
+		try {
+			$db->safeQuery('INSERT INTO users (name, notes) VALUES (?, ?)',[
+				$_POST['name'], $_POST['notes']
+			]);
+
 			$id = mysqli_insert_id($db);
-		} else {
-			$status['status'] = "error";
-			$status['message'] = "Error creating User: " . mysqli_error($db);
-		}
-		if(isset($_POST['debts'])) {
-			$debts = $_POST['debts'];
-			foreach ($debts as $debt) {	
-				$debtid = mysqli_real_escape_string($db,$debt);
-				$query = "INSERT INTO user_debts (user_id, debt_id) VALUES ('$id', '$debt');";
-				if (!mysqli_query($db, $query)) {
-					$status['status'] = "error";
-					$status['message'] = "Error assigning debts to user: " . mysqli_error($db);
-					break;
+			
+			if(isset($_POST['debts'])) {
+				foreach ($_POST['debts'] as $debt) {	
+					$db->safeQuery('INSERT INTO user_debts (user_id, debt_id) VALUES (?, ?)',[$id, $debt]);
 				}
-			}
-		}	
-		$status['status'] = "success";
-		$status['message'] = "User created successfully";
-		header("Location: /admin/?status=".$status['status']."&message=".$status['message']);
+			}	
+			header("Location: /admin/?status=success&message=User created successfully");
+		} catch (Exception $e) {
+			header("Location: /admin/?status=error&message=Error creating User: " . $e->getMessage());
+		}
 	} else {
-		$query = "SELECT * FROM `debts`;";
-		if ($result = mysqli_query($db, $query)) {
-			$alldebts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+		foreach ($db->safeQuery('SELECT * FROM debts') as $debt) {
+			$alldebts[] = $debt;
 		}
 		echo $twig->render('admin/newuser.html.twig', ['alldebts' => $alldebts]);
 	}

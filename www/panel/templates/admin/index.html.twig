@@ -36,7 +36,7 @@
                   <span class="MobilePrefix">Remaining Amount: </span>£{{ debt.amount|number_format(2, '.', ',') }}
                 </td>
                 <td>
-                  <span class="MobilePrefix">Amount Paid This Month: </span>£{{ debt.payment|number_format(2, '.', ',') }}
+                  <span class="MobilePrefix">Amount Paid This Month: </span>£{{ debt.actual_payment|number_format(2, '.', ',') }} / £{{ debt.payment|number_format(2, '.', ',') }}
                 </td>
                 <td>
                   <span class="MobilePrefix">Payment Paid: </span> {% if debt.haspaid == 3 %} <span class='paidover'>In Excess</span> {% elseif debt.haspaid == 2 %} <span class='paidyes'>Yes</span> {% elseif debt.haspaid == 1 %} <span class='paidpartial'>Partial</span {% else %} <span class='paidno'>No</span> {% endif %}

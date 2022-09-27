@@ -2,22 +2,14 @@
     require_once '../init.php';
 	
 	if (isset($_POST['submit'])) {
-		$name = mysqli_real_escape_string($db,$_POST['name']);
-		$start_amount = mysqli_real_escape_string($db,$_POST['start_amount']);
-		$payment = mysqli_real_escape_string($db,$_POST['payment']);
-		$details = mysqli_real_escape_string($db,$_POST['details']);
-		$reference = strtolower(mysqli_real_escape_string($db,$_POST['reference']));
-
-		$query = "INSERT INTO debts (debt, reference, start_amount, amount, payment, details) VALUES ('$name', '$reference', '$start_amount', '$start_amount', '$payment', '$details');";
-		if (mysqli_query($db, $query)) {
-			$status['status'] = "success";
-			$status['message'] = "Debt created successfully";
-			$id = mysqli_insert_id($db);
-		} else {
-			$status['status'] = "error";
-			$status['message'] = "Error creating Debt: " . mysqli_error($db);
+		try {
+			$db->safeQuery('INSERT INTO debts (debt, reference, start_amount, amount, payment, details) VALUES (?, ?, ?, ?, ?, ?)',[
+				$_POST['name'], $_POST['reference'], $_POST['start_amount'], $_POST['start_amount'], $_POST['payment'], $_POST['details']
+			]);
+			header("Location: /admin/?status=success&message=Debt created successfully");
+		} catch (Exception $e) {
+			header("Location: /admin/?status=error&message=Error creating Debt: " . $e->getMessage());
 		}
-		header("Location: /admin/?status=".$status['status']."&message=".$status['message']);
 	} else {
 		echo $twig->render('admin/newdebt.html.twig');
 	}

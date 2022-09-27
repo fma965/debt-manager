@@ -19,10 +19,16 @@
 
 	function MysqlError($message = "", $template = "parts/status.html.twig") {
 		global $twig, $e;
-		$status = ['status' => 'error', 'message' => $message == "" ? "Error: " . $e->getMessage() : "Error: " . $message];
+		$status = ['status' => 'error', 'message' => $message == "" ? "Error: " . $e->getMessage() : $message];
 		if($template == "parts/status.html.twig") return $status;
 		echo $twig->render($template, ['status' => $status]);
 		exit();
+	}
+
+	function MysqlSuccess($type = "record") {
+		$message = $type . " updated successfully";
+		$status = ['status' => 'success', 'message' => $message];
+		return $status;
 	}
 
 	function LoggedIn() {
