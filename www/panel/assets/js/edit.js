@@ -40,7 +40,10 @@ $( "#edit" ).click(function() {
         });
 		$('.debt-name').each(function() {
            $(this).hide();
-        });
+      });
+      $('.debt-name[data-id]').each(function() {
+         $("option[value="+$(this).attr("data-id")+"]").attr('selected', 'selected');
+      });
 		$("option[value="+$('.debt-name[data-id]').attr("data-id")+"]").attr('selected', 'selected');
 		$( "#cancel" ).show();
 		$( "#edit" ).hide();
