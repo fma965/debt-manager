@@ -62,12 +62,12 @@
     ];
 
     $query = "SELECT * FROM users WHERE discord_id='".$result['id']."';";
-    $sqlResult = mysqli_query($con, $query);
+    $sqlResult = mysqli_query($db, $query);
     if (mysqli_num_rows($sqlResult) > 0) {
         //Discord ID exists already
   	} else {
         $query = "INSERT INTO users (name, discord_id) VALUES ('".$result['username']."', '".$result['id']."');";
-        $sqlResult = mysqli_query($con, $query);
+        $sqlResult = mysqli_query($db, $query);
     }
     header("Location: /");
     exit();

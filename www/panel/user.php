@@ -5,50 +5,50 @@
     }
 
     if (isset($_POST['submit'])) {
-        $name = mysqli_real_escape_string($con,$_POST['name']);
-        $id = mysqli_real_escape_string($con,$_POST['id']);
-        $notes = mysqli_real_escape_string($con,$_POST['notes']);
+        $name = mysqli_real_escape_string($db,$_POST['name']);
+        $id = mysqli_real_escape_string($db,$_POST['id']);
+        $notes = mysqli_real_escape_string($db,$_POST['notes']);
         $query = "DELETE FROM user_debts WHERE user_id=$id";
-        if (!mysqli_query($con, $query)) echo '<div id="status" class="alert alert-danger" role="alert">Error updating debts: ' . mysqli_error($con);
+        if (!mysqli_query($db, $query)) echo '<div id="status" class="alert alert-danger" role="alert">Error updating debts: ' . mysqli_error($db);
         
         if(isset($_POST['debts'])) {
             $debts = $_POST['debts'];
             foreach ($debts as $debt) {	
                 if($debt != 0) {
-                    $debt = mysqli_real_escape_string($con,$debt);
+                    $debt = mysqli_real_escape_string($db,$debt);
                     $query = "INSERT INTO user_debts (user_id, debt_id) VALUES ('$id', '$debt');";
-                    if (!mysqli_query($con, $query)) echo '<div id="status" class="alert alert-danger" role="alert">Error updating debts: ' . mysqli_error($con);
+                    if (!mysqli_query($db, $query)) echo '<div id="status" class="alert alert-danger" role="alert">Error updating debts: ' . mysqli_error($db);
                 }
             }
         }
     
         $query = "UPDATE users SET name='$name', notes='$notes' WHERE id=$id;";
-        if (mysqli_query($con, $query)) {
+        if (mysqli_query($db, $query)) {
             $status['status'] = "success";
             $status['message'] = "User updated successfully";
         } else {
             $status['status'] = "error";
-            $status['message'] = "Error updating User: " . mysqli_error($con);
+            $status['message'] = "Error updating User: " . mysqli_error($db);
         }
     }
     $debts = [];
     $alldebts = [];
-    $id = mysqli_real_escape_string($con,$_GET['id']);
+    $id = mysqli_real_escape_string($db,$_GET['id']);
     $remaining = 0; 
 
     $query = "SELECT * FROM users WHERE id = $id LIMIT 1;";
-    $result = mysqli_query($con, $query);
+    $result = mysqli_query($db, $query);
     $numResults = mysqli_num_rows($result);
     if ($numResults > 0) {
         while ($user = mysqli_fetch_assoc($result)) {
             $query = "SELECT * FROM `debts`;";
-            $sqltran = mysqli_query($con, $query);
-            if ($result = mysqli_query($con, $query)) {
+            $sqltran = mysqli_query($db, $query);
+            if ($result = mysqli_query($db, $query)) {
                 $alldebts = mysqli_fetch_all($sqltran, MYSQLI_ASSOC);
             }
 
             $query = "SELECT * FROM user_debts INNER JOIN debts ON debts.id=user_debts.debt_id WHERE user_id = ".$user['id'].";";
-            $result = mysqli_query($con, $query);
+            $result = mysqli_query($db, $query);
             if (mysqli_num_rows($result) !== 0) {
                 $debts = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 foreach ($debts as $debt ) {						

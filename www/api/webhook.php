@@ -21,10 +21,10 @@
 			$amount = number_format($trans['content']['amount']['minorUnits']/100, 2, ".", "");
 			
 			$query = "SELECT * FROM debts WHERE reference = '".strtolower($trans['content']['reference'])."'";
-			$sqltran = mysqli_query($con, $query);
+			$sqltran = mysqli_query($db, $query);
 			while ($debt = mysqli_fetch_array($sqltran)) {	
 				$query = "UPDATE debts SET lastpaymentdate='".strtotime($trans['content']["transactionTime"])."', lastpaymentamount='".$amount."' WHERE id = '".$debt['id']."';";
-				if (!mysqli_query($con, $query)) {
+				if (!mysqli_query($db, $query)) {
 					http_response_code(500); exit;
 				}
 			}
@@ -36,7 +36,7 @@
 					`created` = '".strtotime($trans['content']["transactionTime"])."', 
 					`reference` = '".strtolower($trans['content']["reference"])."', 
 					`counterPartyName` = '".strtolower($trans['content']["counterPartyName"])."'; ";;
-			if (!mysqli_query($con, $query)) {
+			if (!mysqli_query($db, $query)) {
 				http_response_code(500); exit;
 			}
 		}
@@ -44,7 +44,7 @@
 	} else {
 		http_response_code(500); exit;
 	}	
-	mysqli_close($con);
+	mysqli_close($db);
 	
 	//file_put_contents("debug.txt",ob_get_clean());  // Testing
 ?>

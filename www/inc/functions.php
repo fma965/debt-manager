@@ -17,6 +17,19 @@
 		}
 	}
 
+	function MysqlError($message = "", $template = "parts/status.html.twig") {
+		global $twig, $e;
+		$status = ['status' => 'error', 'message' => $message == "" ? "Error: " . $e->getMessage() : "Error: " . $message];
+		if($template == "parts/status.html.twig") return $status;
+		echo $twig->render($template, ['status' => $status]);
+		exit();
+	}
+
+	function LoggedIn() {
+		if(isset($_SESSION['logged_in'])) return $_SESSION['logged_in'];
+		return false;
+	}
+
 	// function discord_notification($json) {
 	// 	$ch = curl_init( DISCORD_WEBHOOK );
 	// 	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));

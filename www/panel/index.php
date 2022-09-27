@@ -1,56 +1,37 @@
 <?php
-
     require_once 'init.php';
-    if(isset($_SESSION['userData'])) {
-        extract($_SESSION['userData']);
 
+    $details = [];
+    $debts = [];
+    $remaining = 0; 
+    
+    if(LoggedIn()) {
         if (isset($_POST['submit'])) {  
-            $name = mysqli_real_escape_string($con,$_POST['name']);
-            $query = "UPDATE users SET name='$name' WHERE discord_id = $discord_id;";
-            if (mysqli_query($con, $query)) {
-                $status['status'] = "success";
-                $status['message'] = "Profile updated successfully";
-            } else {
-                $status['status'] = "error";
-                $status['message'] = "Error updating profile: " . mysqli_error($con);
+            try {
+                $db->safeQuery('UPDATE users SET name= ? WHERE discord_id = ?',[$_POST['name'], $_SESSION['userData']['discord_id']]);
+            } catch (Exception $e) {
+                $status = MysqlError("Error updating User: " . $e->getMessage());
             }
         }
 
-        $debts = [];
-        $alldebts = [];
-        $remaining = 0; 
-
-        $query = "SELECT * FROM users WHERE discord_id = $discord_id LIMIT 1;";
-        $result = mysqli_query($con, $query);
-        $numResults = mysqli_num_rows($result);
-        if ($numResults > 0) {
-            while ($user = mysqli_fetch_assoc($result)) {
-                $query = "SELECT * FROM `debts`;";
-                $sqltran = mysqli_query($con, $query);
-                if ($result = mysqli_query($con, $query)) {
-                    $alldebts = mysqli_fetch_all($sqltran, MYSQLI_ASSOC);
-                }
-
-                $query = "SELECT * FROM user_debts INNER JOIN debts ON debts.id=user_debts.debt_id WHERE user_id = ".$user['id'].";";
-                $result = mysqli_query($con, $query);
-                if (mysqli_num_rows($result) !== 0) {
-                    $debts = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                    foreach ($debts as $debt ) {				
-                        $remaining +=$debt['amount'];
-                    }
-                }
-                $details = $user;
+        try {
+            $details = $db->row('SELECT id, name FROM users WHERE discord_id = ? LIMIT 1', [$_SESSION['userData']['discord_id']]);
+            if ($details) {
+                foreach ($db->safeQuery('SELECT * FROM user_debts INNER JOIN debts ON debts.id=user_debts.debt_id WHERE user_id = ?;', [$details['id']]) as $debt) {
+                    $remaining +=$debt['amount'];
+                    $debts[] = $debt;
+                }  
                 $details['total_cost'] = $remaining;
             }
-        } else {
-            $status['status'] = "error";
-            $status['message'] = "No matching user found";
-            echo $twig->render('wrapper.html.twig', ['status' => $status]);
-        }
-        echo $twig->render('index.html.twig', ['userData' => $_SESSION['userData'], 'alldebts' => $alldebts, 'debts' => $debts, 'details' => $details, 'status' => $status]);
-    } else {
-        echo $twig->render('index.html.twig');
+        } catch (Exception $e) {
+            $status = MysqlError(template:"wrapper.html.twig");
+        } 
     }
 
-
+    echo $twig->render('index.html.twig', [
+        'userData' => isset($_SESSION['userData']) ? $_SESSION['userData'] : [],
+        'debts' => $debts,
+        'details' => $details,
+        'status' => $status
+    ]);
 ?>

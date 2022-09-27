@@ -22,10 +22,15 @@
 	define('DISCORD_ADMIN', 	   		'');
 	define('DISCORD_WEBHOOK', 			'');
 	
+	// Debug
+	//ini_set('display_errors', 1);
+	//ini_set('display_startup_errors', 1);
+	//error_reporting(E_ALL);
+
 	// Establish DB connection
-	$con = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-	if (mysqli_connect_errno()) {
-		echo "Failed to connect to MySQL: " . mysqli_connect_error();
-		exit();
+	require "DBClass.php";
+	$db = new DBClass(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+	if ($db->connect_error) {
+		die("Connection failed: " . $db->connect_error);
 	}
 ?>
