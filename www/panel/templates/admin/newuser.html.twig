@@ -1,25 +1,23 @@
 {% include 'header.html.twig' %}
-<div>
-	<div class='panel panel-info'>
-		<form class="form-inline" action="" method="post">
-			<div class='panel-heading'>
-				<h3 class='panel-title'><span style='font-size: 20pt;'>New User</span></h3>
-			</div>
-			<div class='panel-body'>
-				<div class='col-12 col-md-12'>
-					<div class='well well-sm'><Strong>Name: </Strong><br /><input name="name" class="form-control fullwidthinput" required/></div>
-					<div class='well well-sm debts'><Strong>Debts: </Strong>
-                        <select id='' multiple class='form-control' name="debts[]">
-                            {% for debt in alldebts %}
-                                <option value="{{ debt.id }}">{{ debt.debt }}</option>
-                            {% endfor %}
-                        </select>
-					</div>
-					<div class='well well-sm' style='height:280px;'><Strong>Notes: </Strong><br/><textarea id="notes" name="notes" class="form-control"></textarea></div>
-					<input id="submitnew" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/>
+<div class='panel panel-info'>
+	<form class="form-inline" action="" method="post">
+		<div class='panel-heading'>
+			<h3 class='panel-title'><span style='font-size: 20pt;'>New User</span></h3>
+		</div>
+		<div class='panel-body'>
+			<div class='col-12 col-md-12'>
+				<div class='well well-sm'><Strong>Name: </Strong><br /><input name="name" class="form-control fullwidthinput" required/></div>
+				<div class='well well-sm debts'><Strong>Debts: </Strong>
+					<select id='' multiple class='form-control' name="debts[]">
+						{% for debt in alldebts %}
+							<option value="{{ debt.id }}">{{ debt.debt }}</option>
+						{% endfor %}
+					</select>
 				</div>
+				<div class='well well-sm' style='height:280px;'><Strong>Notes: </Strong><br/><textarea id="notes" name="notes" class="form-control"></textarea></div>
+				<input id="submitnew" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/>
 			</div>
-		</form>
-	</div>
-</div>	
+		</div>
+	</form>
+</div>
 {% include 'footer.html.twig' %}

@@ -1,3 +1,9 @@
+			<footer class="footer">
+				<div class="row pull-right">
+					<p>Debt Manager created by Scott (Fma965) for personal use</p>
+				</div>
+			</footer>
+		</div>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 		<script src="/assets/js/edit.js?ver=<?=time()?>"></script>
@@ -6,15 +12,10 @@
 		<script>
 			$(document).ready(function(){
 				$('[data-toggle="tooltip"]').tooltip();
-    			$('#transactions').DataTable({
-        			order: [[1, 'desc']],
-    			});
+				$('#transactions').DataTable({
+					order: [[1, 'desc']],
+				});
 			});
 		</script>
-		<footer class="footer">
-			<div class="row pull-right">
-				<p>Debt Manager created by Scott (Fma965) for personal use</p>
-			</div>
-		</footer>
 	</body>
 </html>

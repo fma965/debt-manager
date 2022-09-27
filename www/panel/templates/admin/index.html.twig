@@ -1,91 +1,92 @@
-{% include 'header.html.twig' %} <div class="row">
-    <div class='panel panel-info col-12 col-md-12'>
-      <form class="form-inline" action="" method="post">
-        <div class='panel-heading'>
-          <h3 class='panel-title'>
-            <span style='font-size: 20pt;'>Debts</span>
-          </h3>
-        </div>
-          <div id="debts-table" class="table">
-            <table class="table table-striped table-mobile">
-              <thead>
-                <tr>
-                  <th>Debt</th>
-                  <th>Users</th>
-                  <th>Total Amount</th>
-                  <th>Remaining Amount</th>
-                  <th>Amount Paid This Month</th>
-                  <th>Monthly Payment Paid?</th>
-                  <th>Last Payment Date</th>
-                </tr>
-              </thead>
-              <tbody> {% for debt in debts %}
-                <td>
-                  <a href='/debt.php?id={{ debt.id }}'>{{ debt.debt }}</a>
-                </td>
-                <td>
-                  <span class="MobilePrefix">User: </span>
-                  <ul class="list-unstyled"> {% for user in debt.users %} <li>
-                      <a href='/user.php?id={{ user.id }}'>{{ user.name}}</a>
-                    </li> {% endfor %} </ul>
-                </td>
-                <td>
-                  <span class="MobilePrefix">Total Amount: </span>£{{ debt.start_amount|number_format(2, '.', ',') }}
-                </td>
-                <td>
-                  <span class="MobilePrefix">Remaining Amount: </span>£{{ debt.amount|number_format(2, '.', ',') }}
-                </td>
-                <td>
-                  <span class="MobilePrefix">Amount Paid This Month: </span>£{{ debt.actual_payment|number_format(2, '.', ',') }} / £{{ debt.payment|number_format(2, '.', ',') }}
-                </td>
-                <td>
-                  <span class="MobilePrefix">Payment Paid: </span> {% if debt.haspaid == 3 %} <span class='paidover'>In Excess</span> {% elseif debt.haspaid == 2 %} <span class='paidyes'>Yes</span> {% elseif debt.haspaid == 1 %} <span class='paidpartial'>Partial</span {% else %} <span class='paidno'>No</span> {% endif %}
-                </td>
-                <td>
-                  <span class="MobilePrefix">Last Payment Date: </span>{{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y") }}
-                </td>
-                </tr> {% endfor %}
-              </tbody>
-            </table>
-          </div>
-          <div id="users-total">
-            <span>
-              <strong>Expected Monthly Payment:</strong> £{{ total.expected|number_format(2, '.', ',') }}
-            </span>
-            <br />
-            <span>
-              <strong>Actual Payment This Month:</strong>
-              <span class='{{ total.paid >= total.expected ? 'paidyes' : 'paidno'}}'>£{{ total.paid|number_format(2, '.', ',') }}</span>
-              <br />{{ total.paid >= total.expected ? '' : '(Payment is below expected amount)'}}
-            </span>
-        </div>
-    </form>
+{% include 'header.html.twig' %} 
+<div class='panel panel-info col-12 col-md-12'>
+  <form class="form-inline" action="" method="post">
+    <div class='panel-heading'>
+      <h3 class='panel-title'>
+        <span style='font-size: 20pt;'>Debts</span>
+      </h3>
     </div>
-    <div class='panel panel-info col-12 col-md-12'>
-        <form class="form-inline" action="" method="post">
-          <div class='panel-heading'>
-            <h3 class='panel-title'>
-              <span style='font-size: 20pt;'>Users</span>
-            </h3>
-          </div>
-            <div id="users-table" class="table">
-                <table class="table table-striped table-mobile">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Discord ID</th>
-                    </tr>
-                  </thead>
-                  <tbody> {% for user in users %}
-                    <td>
-                      <a href='/user.php?id={{ user.id }}'>{{ user.name }}</a>
-                    </td>
-                    <td>
-                      <span class="MobilePrefix">Discord ID: </span>{{ user.discord_id }}
-                    </td>
-                    </tr> {% endfor %}
-                  </tbody>
-                </table>
-            </div>
+    <div id="debts-table" class="table">
+      <table class="table table-striped table-mobile">
+        <thead>
+          <tr>
+            <th>Debt</th>
+            <th>Users</th>
+            <th>Total Amount</th>
+            <th>Remaining Amount</th>
+            <th>Amount Paid This Month</th>
+            <th>Monthly Payment Paid?</th>
+            <th>Last Payment Date</th>
+          </tr>
+        </thead>
+        <tbody> {% for debt in debts %}
+          <td>
+            <a href='/debt.php?id={{ debt.id }}'>{{ debt.debt }}</a>
+          </td>
+          <td>
+            <span class="MobilePrefix">User: </span>
+            <ul class="list-unstyled"> {% for user in debt.users %} <li>
+                <a href='/user.php?id={{ user.id }}'>{{ user.name}}</a>
+              </li> {% endfor %} </ul>
+          </td>
+          <td>
+            <span class="MobilePrefix">Total Amount: </span>£{{ debt.start_amount|number_format(2, '.', ',') }}
+          </td>
+          <td>
+            <span class="MobilePrefix">Remaining Amount: </span>£{{ debt.amount|number_format(2, '.', ',') }}
+          </td>
+          <td>
+            <span class="MobilePrefix">Amount Paid This Month: </span>£{{ debt.actual_payment|number_format(2, '.', ',') }} / £{{ debt.payment|number_format(2, '.', ',') }}
+          </td>
+          <td>
+            <span class="MobilePrefix">Payment Paid: </span> {% if debt.haspaid == 3 %} <span class='paidover'>In Excess</span> {% elseif debt.haspaid == 2 %} <span class='paidyes'>Yes</span> {% elseif debt.haspaid == 1 %} <span class='paidpartial'>Partial</span {% else %} <span class='paidno'>No</span> {% endif %}
+          </td>
+          <td>
+            <span class="MobilePrefix">Last Payment Date: </span>{{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y") }}
+          </td>
+          </tr> {% endfor %}
+        </tbody>
+      </table>
     </div>
+    <div id="users-total">
+      <span>
+        <strong>Expected Monthly Payment:</strong> £{{ total.expected|number_format(2, '.', ',') }}
+      </span>
+      <br />
+      <span>
+        <strong>Actual Payment This Month:</strong>
+        <span class='{{ total.paid >= total.expected ? 'paidyes' : 'paidno'}}'>£{{ total.paid|number_format(2, '.', ',') }}</span>
+        <br />{{ total.paid >= total.expected ? '' : '(Payment is below expected amount)'}}
+      </span>
+    </div>
+  </form>
+</div>
+<div class='panel panel-info col-12 col-md-12'>
+  <form class="form-inline" action="" method="post">
+    <div class='panel-heading'>
+      <h3 class='panel-title'>
+        <span style='font-size: 20pt;'>Users</span>
+      </h3>
+    </div>
+    <div id="users-table" class="table">
+        <table class="table table-striped table-mobile">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Discord ID</th>
+            </tr>
+          </thead>
+          <tbody> {% for user in users %}
+            <td>
+              <a href='/user.php?id={{ user.id }}'>{{ user.name }}</a>
+            </td>
+            <td>
+              <span class="MobilePrefix">Discord ID: </span>{{ user.discord_id }}
+            </td>
+            </tr> {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  </form>
+</div>
 {% include 'footer.html.twig' %}

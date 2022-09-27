@@ -1,21 +1,19 @@
 {% include 'header.html.twig' %}
-<div>
-	<div class='panel panel-info'>
-		<form class="form-horizontal" action="" method="post">
-			<div class='panel-heading'>
-				<h3 class='panel-title'><span style='font-size: 20pt;'>New Debt</span></h3>
+<div class='panel panel-info'>
+	<form class="form-horizontal" action="" method="post">
+		<div class='panel-heading'>
+			<h3 class='panel-title'><span style='font-size: 20pt;'>New Debt</span></h3>
+		</div>
+		<div class='panel-body'>
+			<div class='col-12 col-md-12'>
+				<div class='well well-sm'><Strong>Name: </Strong><br /><input name="name" class="form-control" required/></div>
+				<div class='well well-sm'><Strong>Bank Reference: </Strong><br /><input name="reference" class="form-control" required/></div>
+				<div class='well well-sm'><Strong>Start Amount: </Strong><br /><input name="start_amount" type="number" step="0.01" class="form-control" required/></div>				
+				<div class='well well-sm'><Strong>Payment Amount: </Strong><br /><input name="payment" type="number" step="0.01" class="form-control" required/></div>		
+				<div class='well well-sm' style='height:180px;'><Strong>Details: </Strong><br/><textarea id="details" name="details" class="form-control" ></textarea></div>
+				<input id="submitnew" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/>
 			</div>
-			<div class='panel-body'>
-				<div class='col-12 col-md-12'>
-					<div class='well well-sm'><Strong>Name: </Strong><br /><input name="name" class="form-control" required/></div>
-					<div class='well well-sm'><Strong>Bank Reference: </Strong><br /><input name="reference" class="form-control" required/></div>
-					<div class='well well-sm'><Strong>Start Amount: </Strong><br /><input name="start_amount" type="number" step="0.01" class="form-control" required/></div>				
-					<div class='well well-sm'><Strong>Payment Amount: </Strong><br /><input name="payment" type="number" step="0.01" class="form-control" required/></div>		
-					<div class='well well-sm' style='height:180px;'><Strong>Details: </Strong><br/><textarea id="details" name="details" class="form-control" ></textarea></div>
-					<input id="submitnew" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>	
+		</div>
+	</form>
+</div>
 {% include 'footer.html.twig' %}

@@ -1,5 +1,5 @@
 {% if status.status == "success" and status.message != null %}
-<div id="status" class="alert alert-success" role="alert">{{ status.message }}</div>
+    <div id="status" class="alert alert-success" role="alert">{{ status.message }}</div>
 {% elseif status.status == "success" %}
     <div id="status" class="alert alert-success" role="alert">Action completed successfully</div>
 {% elseif status.status == "error" and status.message != null %}
