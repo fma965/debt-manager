@@ -15,8 +15,10 @@
 				}
 			}	
 			header("Location: /admin/?status=success&message=User created successfully");
+			exit; 
 		} catch (Exception $e) {
 			header("Location: /admin/?status=error&message=Error creating User: " . $e->getMessage());
+			exit; 
 		}
 	} else {
 		foreach ($db->safeQuery('SELECT * FROM debts') as $debt) {

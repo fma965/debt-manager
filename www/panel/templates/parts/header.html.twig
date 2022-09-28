@@ -7,6 +7,7 @@
 		<link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/dataTables.bootstrap.min.css">
 		<link href="/assets/css/bootstrap.min.css" rel="stylesheet"/>
 		<link href="/assets/css/style.css" rel="stylesheet"/>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	</head>
     <body role="document">
 		<nav class="navbar navbar-default">
@@ -40,4 +41,6 @@
 			</div>
 		</nav>
 	    <div class="container-fluid theme-showcase" role="main"> 
-			{% include 'parts/status.html.twig' %}
+			<div id="result">
+				{% include 'parts/status.html.twig' %}
+			</div>

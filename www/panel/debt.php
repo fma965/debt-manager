@@ -3,6 +3,7 @@
 
     if (!isset($_REQUEST['id']) || isset($_REQUEST['id']) && !is_numeric($_REQUEST['id'])) {
         header("Location: /");
+        exit; 
     }
    
     if (isset($_POST['submit'])) {
@@ -35,7 +36,7 @@
             $details = $row;
         }
     } catch (Exception $e) {
-        $status = MysqlError(template:"wrapper.html.twig");
+        $status = MysqlError(template:"main.html.twig");
     } 
 
     if($authorized) {

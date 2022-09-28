@@ -1,3 +1,9 @@
-{% include 'header.html.twig' %}
+{% include 'parts/header.html.twig' %}
 {% include 'parts/unauthorized.html.twig' %}
-{% include 'footer.html.twig' %}
+{% if logged_in is empty %}
+<div class="jumbotron">
+    <p>Please log in using your Discord Account to access your account and debt information!</p>
+    <p><a href="/login.php"><button class="btn navbar-btn btn-lg btn-info">Log In With Discord</button></a></p>
+</div>
+{% endif %}
+{% include 'parts/footer.html.twig' %}

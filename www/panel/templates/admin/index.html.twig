@@ -1,4 +1,4 @@
-{% include 'header.html.twig' %} 
+{% include 'parts/header.html.twig' %} 
 <div class='panel panel-info col-12 col-md-12'>
   <form class="form-inline" action="" method="post">
     <div class='panel-heading'>
@@ -16,7 +16,7 @@
             <th>Remaining Amount</th>
             <th>Amount Paid This Month</th>
             <th>Monthly Payment Paid?</th>
-            <th>Last Payment Date</th>
+            <th>Last Payment</th>
           </tr>
         </thead>
         <tbody> {% for debt in debts %}
@@ -42,7 +42,7 @@
             <span class="MobilePrefix">Payment Paid: </span> {% if debt.haspaid == 3 %} <span class='paidover'>In Excess</span> {% elseif debt.haspaid == 2 %} <span class='paidyes'>Yes</span> {% elseif debt.haspaid == 1 %} <span class='paidpartial'>Partial</span {% else %} <span class='paidno'>No</span> {% endif %}
           </td>
           <td>
-            <span class="MobilePrefix">Last Payment Date: </span>{{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y") }}
+            <span class="MobilePrefix">Last Payment: </span>{{ debt.lastpaymentdate is empty ? "N/A" : "£" ~ debt.payment ~ " (" ~ debt.lastpaymentdate|date("jS F Y") ~ ")" }}
           </td>
           </tr> {% endfor %}
         </tbody>
@@ -89,4 +89,4 @@
     </div>
   </form>
 </div>
-{% include 'footer.html.twig' %}
+{% include 'parts/footer.html.twig' %}

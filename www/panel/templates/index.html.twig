@@ -1,10 +1,10 @@
-{% include 'header.html.twig' %}
+{% include 'parts/header.html.twig' %}
 {% if logged_in == true %}
 <div class='panel panel-info'>
     <form class="form-inline" action="" method="post">
         <input name="id" type="hidden" value="{{ details.id }}"/>
         <div class='panel-heading'>
-            <img style="margin-right: 20px; height: 70px;" class="pull-left" src="https://cdn.discordapp.com/avatars/{{ userData.discord_id }}/{{ userData.avatar }}.jpg"/>
+            <img style="border-radius: 50%; margin-right: 20px; height: 70px;" class="pull-left" src="https://cdn.discordapp.com/avatars/{{ userData.discord_id }}/{{ userData.avatar }}.jpg"/>
             <h3 class='panel-title' style="margin: 20px 0px;"><span style='font-size: 20pt;'>Welcome {{ details.name }}</span></h3>
         </div>
         <div class='panel-body'>
@@ -27,9 +27,9 @@
                                             <div><h4><Strong>Remaining Amount: £{{ debt.amount|default(0)|number_format(2, '.', ',') }}</Strong></h4></div>
                                             <div><Strong>Starting Amount: </Strong>£{{ debt.start_amount|number_format(2, '.', ',') }}</div>
                                             <div><Strong>Monthly Payment: </Strong>£{{ debt.payment|number_format(2, '.', ',') }}</div>
-                                            <br>
-                                            <div><Strong>Last Payment: </Strong>{{ debt.lastpayment is empty ? "N/A" : "£" ~ debt.lastpayment|number_format(2, '.', ',')}}</div>
-                                            <div><Strong>Last Payment Date: </Strong>{{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y") }}</div>
+                                            <br><div><Strong><u>Last Payment</u></Strong></div>
+                                            <div><Strong>Amount: </Strong>{{ debt.lastpayment is empty ? "N/A" : "£" ~ debt.lastpayment|number_format(2, '.', ',')}}</div>
+                                            <div><Strong>Date: </Strong>{{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y \\a\\t g:ia") }}</div>
                                             <br>
                                             <div><Strong>Bank Reference: </Strong>{{ debt.reference }}</div>
                                         </div>
@@ -51,4 +51,4 @@
     <p><a href="/login.php"><button class="btn navbar-btn btn-lg btn-info">Log In With Discord</button></a></p>
 </div>
 {% endif %}
-{% include 'footer.html.twig' %}
+{% include 'parts/footer.html.twig' %}

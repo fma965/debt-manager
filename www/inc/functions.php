@@ -1,7 +1,7 @@
 <?php
 	if (basename($_SERVER['PHP_SELF']) == basename(__FILE__)) {
 			die('Direct access not allowed');
-			exit();
+			exit;
 	};
 
 	// Simple function to check multiple conditions and return a bit of HTML.
@@ -22,7 +22,7 @@
 		$status = ['status' => 'error', 'message' => $message == "" ? "Error: " . $e->getMessage() : $message];
 		if($template == "parts/status.html.twig") return $status;
 		echo $twig->render($template, ['status' => $status]);
-		exit();
+		exit;
 	}
 
 	function MysqlSuccess($type = "record") {

@@ -3,6 +3,7 @@
 
     if (!isset($_REQUEST['id']) || isset($_REQUEST['id']) && !is_numeric($_REQUEST['id'])) {
         header("Location: /");
+        exit; 
     }
 
     if (isset($_POST['submit'])) {       
@@ -41,7 +42,7 @@
             $details['total_cost'] = $remaining;
         }
     } catch (Exception $e) {
-        $status = MysqlError(template:"wrapper.html.twig");
+        $status = MysqlError(template:"main.html.twig");
     }
     echo $twig->render('user.html.twig', ['alldebts' => $alldebts, 'debts' => $debts, 'details' => $details, 'status' => $status]); 
 ?>

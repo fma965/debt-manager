@@ -3,7 +3,7 @@
     
     if(!isset($_GET['code'])) {
         header("Location: https://discord.com/api/oauth2/authorize?client_id=".DISCORD_CLIENT_ID."&redirect_uri=" . urlencode(HOST . "/login.php"). "&response_type=code&scope=identify");
-        exit();
+        exit; 
     }
     $access_token = "";
     $discord_code = $_GET['code'];
@@ -45,7 +45,7 @@
         $result = json_decode($result, true);
 
         if(!$result) {
-            exit("Something went wrong!");
+            exit;
         }
 
         $_SESSION['logged_in'] = true;
@@ -62,10 +62,11 @@
                 $db->safeQuery('INSERT INTO users (name, discord_id) VALUES (?, ?)',[$result['username'], $result['id']]);
             }
             header("Location: /");
+            exit; 
         } catch (Exception $e) {
-            $status = MysqlError(template:"wrapper.html.twig");
+            $status = MysqlError(template:"main.html.twig");
         }
     } else {
-        exit("Invalid Access Token");
+        exit;
     }
 ?>
