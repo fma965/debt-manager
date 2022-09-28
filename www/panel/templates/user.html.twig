@@ -1,11 +1,11 @@
 {% include 'parts/header.html.twig' %}
 {% if details is not empty %}
 <div class='panel panel-info'>
-	<button type="button" data-id="{{ details.id }}" data-type="user" class="pull-right btn btn-danger delete">Delete</button>
 	<form class="form-inline" action="" method="post">
 		<input name="id" type="hidden" value="{{ details.id }}"/>
 		<div class='panel-heading'>
 			<h3 class='panel-title'><span style='font-size: 20pt;'>User: {{ details.name }} </span> &nbsp;
+				<button type="button" data-id="{{ details.id }}" data-type="user" class="pull-right btn btn-danger delete">Delete</button>
 				<button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
 				<input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp;
 				<button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button> &nbsp;

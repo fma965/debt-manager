@@ -1,14 +1,13 @@
 {% include 'parts/header.html.twig' %}
 {% if details is not empty %}
 <div class="panel panel-info">
-    {% if admin == true %}
-        <button type="button" data-id="{{ details.id }}" data-type="debt" class="pull-right btn btn-danger delete">Delete</button>
-    {% endif %}
+    
     <form class="form-horizontal" action="" method="post">
         <input name="id" type="hidden" value="{{ details.id }}"/>
         <div class='panel-heading'>
             <h3 class='panel-title'><span style='font-size: 20pt;'>Debt: {{ details.debt }}</span> &nbsp; 
             {% if admin == true %}
+            <button type="button" data-id="{{ details.id }}" data-type="debt" class="pull-right btn btn-danger delete">Delete</button>
             <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
             <input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp; 
             <button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button></h3>
@@ -29,18 +28,20 @@
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Date</th>
+                        <th>Counter Party</th>
+                        <th>Date/Time</th>
                         <th>Amount</th>
                         <th></th>
                      </tr>
                     </thead>
                     <tbody>
                         {% for transaction in transactions %}
-                        <tr data-id="{{ transaction.transactionId }}" data-toggle="tooltip" data-placement="left" data-html="true" title="{{ transaction.counterPartyName }}<br>{{ transaction.transactionId }}">
+                        <tr data-id="{{ transaction.transactionId }}">
                             <td>{{ transaction.transactionId }}</td>
+                            <td>{{ transaction.counterPartyName }}</td>
                             <td>{{ transaction.created |date("jS F Y \\a\\t g:ia") }}</td>
                             <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
-                            <td data-toggle="tooltip" data-placement="right" data-html="true" title="Delete"><a style="cursor: pointer; vertical-align: bottom;" class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button">❌</a>
+                            <td style="text-align: center;"><a style="cursor: pointer; vertical-align: bottom;" class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button">❌</a>
                             </td>
                         </tr>
                         {% endfor %}
