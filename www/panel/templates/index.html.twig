@@ -1,51 +1,105 @@
 {% include 'parts/header.html.twig' %}
 {% if logged_in == true %}
-<div class='panel panel-info'>
-    <form class="form-inline" action="" method="post">
-        <input name="id" type="hidden" value="{{ details.id }}"/>
-        <div class='panel-heading'>
-            <img style="border-radius: 50%; margin-right: 20px; height: 70px;" class="pull-left" src="https://cdn.discordapp.com/avatars/{{ userData.discord_id }}/{{ userData.avatar }}.jpg"/>
-            <h3 class='panel-title' style="margin: 20px 0px;"><span style='font-size: 20pt;'>Welcome {{ details.name }}</span></h3>
+        <div class="mt-4 card mb-3">
+            <div class="card-header text-center" style="background-color:#262626!important;">
+                <img style="border-radius: 50%; margin-right: 20px; height: 50px; vertical-align:bottom" src="https://cdn.discordapp.com/avatars/{{ userData.discord_id }}/{{ userData.avatar }}.jpg"/>
+                <h3 class='card-title d-inline-block'><span class="fs-3">Welcome {{ details.name }}</span></h3>
+            </div>
+            <div class="card-body">
+                <form class="form-inline" action="" method="post">
+                <input name="id" type="hidden" value="{{ details.id }}"/>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Name: 
+                            <span name="name" id="name" class="editable fw-normal d-inline-block w-auto">{{ details.name }}</span>&nbsp;
+                            <button type="button" id="edit" class="btn btn-sm btn-primary align-bottom">📝</button>
+                            <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-success align-bottom"/> &nbsp;
+                            <button type="button" id="cancel" class="btn btn-danger align-bottom">Cancel</button>
+                        </div>
+                    </div>
+
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Discord Name: <span name="name" class="fw-normal">{{ userData.name }}</span>
+                        </div>
+                    </div>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Discord ID: <span name="discord_id" class="fw-normal">{{ userData.discord_id }}</span>
+                        </div>
+                    </div>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Total Remaing Debt Amount: <span class="fw-normal" name="cost" >£{{ details.total_cost }}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>    
         </div>
-        <div class='panel-body'>
-            <div class='col-12 col-md-12'>
-                <div class='well well-sm'>
-                    <Strong>Name: </Strong>
-                    <span name="name" class="editable">{{ details.name }}</span>
-                    &nbsp; <button type="button" id="edit" class="btn btn-sm btn-primary">📝</button>&nbsp;
-                    <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-sm btn-success"/> &nbsp;
-                    <button type="button" id="cancel" class="btn btn-sm btn-danger">Cancel</button> &nbsp;</div>
-                <div class='well well-sm'><Strong>Discord Name: </Strong><span name="name">{{ userData.name }}</span></div>
-                <div class='well well-sm'><Strong>Discord ID: </Strong><span name="discord_id" >{{ userData.discord_id }}</span></div>
-                <div class='well well-sm'><Strong>Total Remaing Debt Amount: </Strong> £<span name="cost" >{{ details.total_cost }}</span></div>
-                    {% if debts is not empty %}
-                        {% for debt in debts %}
-                                <div class="col-6 col-md-4 col-lg-4 well well-sm">
-                                    <div class='panel-body'>
-                                        <div class="pull-left">
-                                            <div><p style="text-decoration: underline;"><a href='debt.php?id={{ debt.id }}'>{{ debt.debt }}</a></p></div>
-                                            <div><h4><Strong>Remaining Amount: £{{ debt.amount|default(0)|number_format(2, '.', ',') }}</Strong></h4></div>
-                                            <div><Strong>Starting Amount: </Strong>£{{ debt.start_amount|number_format(2, '.', ',') }}</div>
-                                            <div><Strong>Monthly Payment: </Strong>£{{ debt.payment|number_format(2, '.', ',') }}</div>
-                                            <br><div><Strong><u>Last Payment</u></Strong></div>
-                                            <div><Strong>Amount: </Strong>{{ debt.lastpayment is empty ? "N/A" : "£" ~ debt.lastpayment|number_format(2, '.', ',')}}</div>
-                                            <div><Strong>Date: </Strong>{{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y \\a\\t g:ia") }}</div>
-                                            <br>
-                                            <div><Strong>Bank Reference: </Strong>{{ debt.reference }}</div>
-                                        </div>
-                                        <a href='debt.php?id={{ debt.id }}' style="vertical-align: bottom;" type="button" id="edit" class="pull-right btn btn-primary">Details</a>&nbsp;
-                                    </div>
-                                </div>
-                        {% endfor %}
-                    {% else %}
-                    <div class="alert alert-success" style="display: inline-block;"><Strong>No Debts</Strong></div>
-                    {% endif %}
+        
+        <div class="mt-4 card mt-3">
+            <div class="card-header text-center" style="background-color:#262626!important;">
+                <h3 class='card-title d-inline-block'><span class="fs-3">Debts</span></h3>
+            </div>
+            {% if debts is not empty %}
+            <div class="card-body">       
+            <div class="row">
+                {% for debt in debts %}
+                <div class="col-xs-12 col-lg-6 mb-2 ">
+                    <div class="card-header" style="background-color:#262626!important;">
+                        <h3 class="text-center ">
+                            <a href='debt.php?id={{ debt.id }}'>{{ debt.debt }}</a>
+                        </h3>
+                    </div>
+                    <div class="card card-body bg-dark">
+                        <div class="float-start" >
+                            <div>
+                                <p class="fs-5">
+                                    <span class="fw-bold">Remaining Amount: £{{ debt.amount|default(0)|number_format(2, '.', ',') }}</span>
+                                </p>
+                            </div>
+                            <div>
+                                <span class="fw-bold">Starting Amount: </span>
+                                £{{ debt.start_amount|number_format(2, '.', ',') }}
+                            </div>
+                            <div>
+                                <span class="fw-bold">Monthly Payment: </span>
+                                £{{ debt.payment|number_format(2, '.', ',') }}
+                            </div>
+                            <br>
+                            <div>
+                                <span class="fw-bold text-decoration-underline">Last Payment</span>
+                            </div>
+                            <div>
+                                <span class="fw-bold">Amount: </span>
+                                {{ debt.lastpayment is empty ? "N/A" : "£" ~ debt.lastpayment|number_format(2, '.', ',')}}
+                            </div>
+                            <div>
+                                <span class="fw-bold">Date: </span>
+                                {{ debt.lastpaymentdate is empty ? "N/A" : debt.lastpaymentdate|date("jS F Y \\a\\t g:ia") }}
+                            </div>
+                            <br>
+                            <div>
+                                <span class="fw-bold">Bank Reference: </span>
+                                {{ debt.reference }}
+                            </div>
+                        </div>
+                        <div class="col">
+                            <a href='debt.php?id={{ debt.id }}' style="vertical-align: bottom;" type="button" id="edit" class="float-end btn btn-primary">Details</a>
+                        </div>
+                    </div>
                 </div>
+                {% endfor %}
+            </div>
         </div>
-    </form>
-</div>   
+        {% else %}
+        <div class="card card-body bg-dark">
+            You have no active debts!
+        </div>
+        {% endif %}
+    </div>
 {% else %}
-<div class="jumbotron">
+<div class="p-5 my-4 rounded-3">
     <h1>Debt Manager</h1>
     <p>Please log in using your Discord Account to access your account and debt information!</p>
     <p><a href="/login.php"><button class="btn navbar-btn btn-lg btn-info">Log In With Discord</button></a></p>

@@ -5,13 +5,13 @@
 		<input name="id" type="hidden" value="{{ details.id }}"/>
 		<div class='panel-heading'>
 			<h3 class='panel-title'><span style='font-size: 20pt;'>User: {{ details.name }} </span> &nbsp;
-				<button type="button" data-id="{{ details.id }}" data-type="user" class="pull-right btn btn-danger delete">Delete</button>
+				<button type="button" data-id="{{ details.id }}" data-type="user" class="float-end btn btn-danger delete">Delete</button>
 				<button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
 				<input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp;
 				<button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button> &nbsp;
 			</h3>
 		</div>
-		<div class='panel-body'>
+		<div class="card card-body">
 			<div class='col-12 col-md-12'>
 				<div class='well well-sm'><Strong>Name: </Strong><span name="name" class="editable">{{ details.name }}</span></div>
 				<div class='well well-sm'><Strong>Discord ID: </Strong><span name="discord_id" class="editable">{{ details.discord_id }}</span></div>

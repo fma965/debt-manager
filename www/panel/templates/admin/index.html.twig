@@ -1,8 +1,8 @@
 {% include 'parts/header.html.twig' %} 
-<div class='panel panel-info col-12 col-md-12'>
+<div class='card col-12 col-md-12'>
   <form class="form-inline" action="" method="post">
     <div class='panel-heading'>
-      <h3 class='panel-title'>
+      <h3 class='card-title'>
         <span style='font-size: 20pt;'>Debts</span>
       </h3>
     </div>
@@ -24,7 +24,7 @@
             <a href='/debt.php?id={{ debt.id }}'>{{ debt.debt }}</a>
           </td>
           <td>
-            <span class="MobilePrefix">User: </span>
+            <span class="MobilePrefix">Users: </span>
             <ul class="list-unstyled"> {% for user in debt.users %} <li>
                 <a href='/user.php?id={{ user.id }}'>{{ user.name}}</a>
               </li> {% endfor %} </ul>
