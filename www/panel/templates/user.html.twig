@@ -2,7 +2,7 @@
 {% if details is not empty %}
 <form class="form-horizontal" action="" method="post">
 	<div class="mt-4 card mb-3">
-		<div class="card-header text-center" style="background-color:#262626!important;">
+		<div class="card-header text-center bg-cyan text-white">
 			<h3 class='panel-title'><span style='font-size: 20pt;'>User: {{ details.name }}</span> &nbsp; 
 				{% if admin == true %}
 				<button type="button" data-id="{{ details.id }}" data-type="user" class="float-end btn btn-danger delete"><i class="bi bi-trash align-middle me-1 fs-6" ></i>Delete</button>

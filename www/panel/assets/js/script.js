@@ -29,7 +29,7 @@ $("#edit").click(function() {
        var itemClass = $(this).attr('class');
        var itemName = $(this).attr('name');
        var input = $('<textarea></textarea>');
-       input.addClass(itemClass).val(itemData).attr('name', itemName).addClass('form-control').css('height', '90%').css('width', '100%');
+       input.addClass(itemClass).val(itemData).attr('name', itemName).addClass('form-control').css('height', '200px').css('width', '100%');
        $(this).replaceWith(input);
    });
    

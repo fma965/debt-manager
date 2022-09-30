@@ -1,7 +1,7 @@
 {% include 'parts/header.html.twig' %}
 {% if logged_in == true %}
         <div class="mt-4 card mb-3">
-            <div class="card-header text-center" style="background-color:#262626!important;">
+            <div class="card-header text-center bg-cyan text-white">
                 <img style="border-radius: 50%; margin-right: 20px; height: 50px; vertical-align:bottom" src="{{ discord.avatar }}"/>
                 <h3 class='card-title d-inline-block'><span class="fs-3">Welcome {{ details.name }}</span></h3>
             </div>
@@ -38,7 +38,7 @@
         </div>
         
         <div class="mt-4 card mt-3">
-            <div class="card-header text-center" style="background-color:#262626!important;">
+            <div class="card-header text-center bg-cyan text-white">
                 <h3 class='card-title d-inline-block'><span class="fs-3">💷 Debts</span></h3>
             </div>
             {% if debts is not empty %}
@@ -46,12 +46,12 @@
             <div class="row">
                 {% for debt in debts %}
                 <div class="col-xs-12 col-lg-6 mb-2 ">
-                    <div class="card-header" style="background-color:#262626!important;">
+                    <div class="card-header">
                         <h3 class="text-center ">
                             <a href='debt.php?id={{ debt.id }}'>{{ debt.debt }}</a>
                         </h3>
                     </div>
-                    <div class="card card-body bg-dark">
+                    <div class="card card-body bg-dark rounded-0 rounded-bottom border-top-0">
                         <div class="float-start" >
                             <div>
                                 <p class="fs-5">
