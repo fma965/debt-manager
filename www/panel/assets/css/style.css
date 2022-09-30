@@ -47,62 +47,41 @@ a:hover {
 	width: auto;
 }
 
-@media only screen and (max-width: 480px), (max-device-width: 1024px) {
+.btn-close {
+    -webkit-filter: invert(0) grayscale(0%) brightness(100%);
+    filter: invert(0) grayscale(0%) brightness(100%);
+}
+
+.navbar-dark .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 0.55)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E") !important;
+}
+
+@media only screen and (max-width: 768px) {
+	.mobile-list li:after {
+		content: ", ";
+	}
+
+	.mobile-list li:last-child:after {
+		content: "";
+	}
 	
-	.MobilePrefix {
-		font-weight: bold;
-		display: block;
-		text-decoration: underline;
+	.mobile-list li {
+		display: inline;
 	}
 
 	#users-total {
 		text-align: center;
 	}
-
-	.table-mobile,
-	.table-mobile thead,
-	.table-mobile tbody,
-	.table-mobile th,
-	.table-mobile td,
-	.table-mobile tr,
-	.table-mobile h2 {
-		display: block;
-		text-align: center;
-		border-top: none !important;
-	}
-
-	.table-mobile thead tr {
-		display: none;
-	}
-
-	.table-mobile tr {
-		margin-bottom: 15px;
-		background-color: #1a1b1d9c !important;
-		box-shadow: 5px 10px 5px 0px rgba(0, 0, 0, 0.75);
-		border-radius: 15px;
-	}
-
-	.table-mobile td:before {
-		font-weight: bold;
-	}
-
-	.table-mobile {
-		background-color: #2e3338 !important;
-	}
-
-	.table-mobile td:nth-of-type(1) {
-		background-color: black;
-		border-radius: 15px 15px 0px 0px;
-		text-align: center;
-		font-size: 2.5rem;
-	}
-
-	.panel-info .panel-heading {
-		border: none;
-	}
-
-	.panel-title {
-		text-align: center;
-	}
 }
 
+.bootstrap-table .fixed-table-container .table tbody tr .card-view {
+	margin-bottom: 0.25rem;
+}
+
+.bootstrap-table .fixed-table-container .table tbody tr .card-view .card-view-title {
+	width: 100% !important;
+}
+
+.bootstrap-table .fixed-table-toolbar .search {
+    background-color: var(--bs-dark);
+}

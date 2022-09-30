@@ -1,3 +1,7 @@
+$(function() {
+    $('#table').bootstrapTable()
+  })
+
 $("#edit").click(function() {
    $("#placeholder").show();
    
@@ -49,9 +53,6 @@ $("#cancel").click(function() {
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
-    $('#transactions').DataTable({
-        order: [[1, 'desc']],
-    });
 });
 
 $(".delete").click(function() {
