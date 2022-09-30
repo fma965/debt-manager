@@ -14,8 +14,13 @@
 
     $script_name = basename($_SERVER['PHP_SELF']);
     if(LoggedIn()) {
+        extract($_SESSION['userData']);
+        $avatar_url = "https://cdn.discordapp.com/avatars/$discord_id/$avatar.jpg";
+        
         $twig->addGlobal('logged_in', $_SESSION['logged_in']);
         $twig->addGlobal('admin', $_SESSION['admin']);
+        $twig->addGlobal('discord', ["name" => $name, "avatar" => $avatar_url, "id" => $discord_id]);
+
         if(!$_SESSION['admin'] && (str_starts_with(dirname($_SERVER['SCRIPT_NAME']),"/admin") || $script_name == "user.php")) {
             echo $twig->render('unauthorized.html.twig');
             exit;
