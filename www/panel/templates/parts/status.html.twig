@@ -1,13 +1,14 @@
 {% if status.status == "success" and status.message != null %}
-    <div id="status" class="alert alert-success alert-dismissible fade show mt-4" role="alert">{{ status.message }}
+    <div id="status" class="alert alert-success d-flex align-items-center justify-content-between fade show mt-3" role="alert"><div><i class="bi flex-shrink-0 me-2 bi-check-circle-fill" width="24" height="24" role="img" aria-label="Success:"></i>{{ status.message }}</span>
 {% elseif status.status == "success" %}
-    <div id="status" class="alert alert-success alert-dismissible fade show mt-4" role="alert">Action completed successfully
+    <div id="status" class="alert alert-success d-flex align-items-center justify-content-between fade show mt-3" role="alert"><div><i class="bi flex-shrink-0 me-2 bi-check-circle-fill" width="24" height="24" role="img" aria-label="Success:"></i>Action completed successfully
 {% elseif status.status == "error" and status.message != null %}
-    <div id="status" class="alert alert-danger alert-dismissible fade show mt-4" role="alert">{{ status.message }}
+    <div id="status" class="alert alert-danger d-flex align-items-center justify-content-between fade show mt-3" role="alert"><div><i class="bi flex-shrink-0 me-2 bi-exclamation-triangle-fill" width="24" height="24" role="img" aria-label="Danger:"></i>{{ status.message }}</span>
 {% elseif status.status == "error" %}
-    <div id="status" class="alert alert-danger alert-dismissible fade show mt-4" role="alert">Error completing action.
+    <div id="status" class="alert alert-danger d-flex align-items-center justify-content-between fade show mt-3" role="alert"><div><i class="bi flex-shrink-0 me-2 bi-exclamation-triangle-fill" width="24" height="24" role="img" aria-label="Danger:"></i>Error completing action.
 {% endif %}
 {% if (status.status == "success" or status.status == "error") %}
+    </div> 
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 {% endif %}

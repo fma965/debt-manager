@@ -2,7 +2,7 @@
 {% if logged_in == true %}
         <div class="mt-4 card mb-3">
             <div class="card-header text-center" style="background-color:#262626!important;">
-                <img style="border-radius: 50%; margin-right: 20px; height: 50px; vertical-align:bottom" src="https://cdn.discordapp.com/avatars/{{ userData.discord_id }}/{{ userData.avatar }}.jpg"/>
+                <img style="border-radius: 50%; margin-right: 20px; height: 50px; vertical-align:bottom" src="{{ discord.avatar }}"/>
                 <h3 class='card-title d-inline-block'><span class="fs-3">Welcome {{ details.name }}</span></h3>
             </div>
             <div class="card-body">
@@ -39,7 +39,7 @@
         
         <div class="mt-4 card mt-3">
             <div class="card-header text-center" style="background-color:#262626!important;">
-                <h3 class='card-title d-inline-block'><span class="fs-3">Debts</span></h3>
+                <h3 class='card-title d-inline-block'><span class="fs-3">💷 Debts</span></h3>
             </div>
             {% if debts is not empty %}
             <div class="card-body">       
@@ -99,10 +99,10 @@
         {% endif %}
     </div>
 {% else %}
-<div class="p-5 my-4 rounded-3">
+<div class="p-5 my-4 rounded-3 bg-dark">
     <h1>Debt Manager</h1>
     <p>Please log in using your Discord Account to access your account and debt information!</p>
-    <p><a href="/login.php"><button class="btn navbar-btn btn-lg btn-info">Log In With Discord</button></a></p>
+    <p><a href="/login.php"><button class="btn navbar-btn btn-info">Log In With Discord &nbsp; <i class="bi bi-box-arrow-in-right text-white align-middle fs-4"></i></button></a></p>
 </div>
 {% endif %}
 {% include 'parts/footer.html.twig' %}

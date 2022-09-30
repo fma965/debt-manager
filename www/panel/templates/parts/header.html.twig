@@ -2,13 +2,15 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
-		<link href="/assets/css/dataTables.bootstrap5.min.css" rel="stylesheet" >
-		<link href="/assets/css/mdb.dark.min.css" rel="stylesheet"/>
-		<link href="/assets/css/style.css" rel="stylesheet"/>
-		
+
+		<link rel="stylesheet" href="/assets/css/mdb.dark.min.css"/>
+		<link rel="stylesheet" href="/assets/css/bootstrap-table.min.css"/>
+		<link rel="stylesheet" href="/assets/css/style.css"/>
+		<link rel="stylesheet" href="/assets/css/bootstrap-icons.css"/>
+
 		<script src="/assets/js/jquery-3.6.1.min.js" type="text/javascript"></script>
-		<script src="/assets/js/bootstrap.bundle.min.js" type="text/javascript" ></script>
+		<script src="/assets/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+
 		<title>Debt Manager</title>
 	</head>
     <body>
@@ -28,13 +30,21 @@
 					<li class="nav-item"><a href="/admin/newdebt.php" class="nav-link">New Debt</a></li>
 					{% endif %}
 					</ul>
-					<div class="text-end">
+					
+					<div class="dropdown text-end">
 						{% if logged_in is empty %}
-						<a href="/login.php"><button class="btn navbar-btn btn-info">Log In With Discord</button></a>
+						<a href="/login.php"><button class="btn navbar-btn btn-info">Log In With Discord &nbsp; <i class="bi bi-box-arrow-in-right text-white align-middle fs-4"></i></button></a>
 						{% else %}
-						<a href="/logout.php"><button class="btn navbar-btn btn-danger">Log Out</button></a>
+						<a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-1000,20">
+							<img src="{{ discord.avatar }}" width="32" height="32" class="rounded-circle">
+						  </a>
+						<ul class="dropdown-menu text-small" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);" data-popper-placement="bottom-end">
+						  <li><a class="dropdown-item" href="/">Profile</a></li>
+						  <li><hr class="dropdown-divider"></li>
+						  <li><a class="dropdown-item" href="/logout.php">Sign out</a></li>
+						</ul>
 						{% endif %}
-					</div>
+					  </div>
 				  </div>
 				</div>
 			  </nav>

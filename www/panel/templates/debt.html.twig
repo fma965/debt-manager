@@ -1,92 +1,99 @@
 {% include 'parts/header.html.twig' %}
 {% if details is not empty %}
-<div class="mt-4 card mb-3 bg-dark">
-    <div class="card-header ">
-        <h3 class='panel-title'><span style='font-size: 20pt;'>Debt: {{ details.debt }}</span> &nbsp; 
-            {% if admin == true %}
-            <button type="button" data-id="{{ details.id }}" data-type="debt" class="float-end btn btn-danger delete">Delete</button>
-            <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
-            <input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp; 
-            <button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button></h3>
-            {% endif %}
-    </div>
-    <div class="row">
-        <div class="card-body col-12 col-md-6">
-            <form class="form-horizontal" action="" method="post">
+<form class="form-horizontal" action="" method="post">
+    <div class="mt-4 card mb-3">
+        <div class="card-header text-center" style="background-color:#262626!important;">
+            <h3 class='panel-title'><span style='font-size: 20pt;'>Debt: {{ details.debt }}</span> &nbsp; 
+                {% if admin == true %}
+                <button type="button" data-id="{{ details.id }}" data-type="debt" class="float-end btn btn-danger delete"><i class="bi bi-trash align-middle me-1 fs-6" ></i>Delete</button>
+                <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
+                <input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp; 
+                <button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button>
+                {% endif %}
+            </h3>
+        </div>
+        <div class="row">
+            <div class="card-body col-12 col-md-6">
+            
                 <input name="id" type="hidden" value="{{ details.id }}"/>
                 
-                <div class="card card-body mb-2 ">
-                    <div class="col fw-bold">
+                <div class="card card-body mb-2 bg-dark"><div class="col fw-bold">
                         Name:
                         <span name="name" class="editable fw-normal">{{ details.debt }}</span>
                     </div>
                 </div>
 
-                <div class="card card-body mb-2 ">
+                <div class="card card-body mb-2 bg-dark">
                     <div class="col fw-bold">
                         Bank Reference:
                         <span name="reference" class="editable fw-normal">{{ details.reference }}</span>
                     </div>
                 </div>
 
-                <div class="card card-body mb-2 ">
+                <div class="card card-body mb-2 bg-dark">
                     <div class="col fw-bold">
                         Start Amount:
                         £<span name="start_amount" class="editablenum fw-normal">{{ details.start_amount|number_format(2, '.', ',') }}</span>
                     </div>
                 </div>
 
-                <div class="card card-body mb-2 ">
+                <div class="card card-body mb-2 bg-dark">
                     <div class="col fw-bold">
                         Remaining Amount:
                         £<span name="amount" class="editablenum fw-normal">{{ details.amount|number_format(2, '.', ',') }}</span>
                     </div>
                 </div>
 
-                <div class="card card-body mb-2 ">
+                <div class="card card-body mb-2 bg-dark">
                     <div class="col fw-bold">
                         Payment:
                         £<span name="payment" class="editable fw-normal">{{ details.payment|number_format(2, '.', ',') }}</span>
                     </div>
                 </div>
 
-                <div class="card card-body mb-2 ">
+                <div class="card card-body mb-2 bg-dark">
                     <div class="col fw-bold">
                         Details:
                         <span name="details" class="editabletextarea fw-normal">{{ details.details|nl2br }}</span>
                     </div>
                 </div>
-            </form>
-        </div>
-        <div class="card-body col-12 col-md-6">
-            <h4>Payment History</h4> 
-            <div id="result"></div>
-            <table class='table table-striped' id="transactions">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Counter Party</th>
-                        <th scope="col">Date/Time</th>
-                        <th scope="col">Amount</th>
-                        {% if admin == true %}<th scope="col"></th>{% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for transaction in transactions %}
-                    <tr data-id="{{ transaction.transactionId }}">
-                        <td>{{ transaction.transactionId }}</td>
-                        <td>{{ transaction.counterPartyName }}</td>
-                        <td>{{ transaction.created |date("jS F Y \\a\\t g:ia") }}</td>
-                        <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
-                        {% if admin == true %}
-                        <td style="text-align: center;"><a style="cursor: pointer; vertical-align: bottom;" class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button">❌</a></td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            </div>
+        </form>
+            <div class="card-body col-12 col-md-6">
+                <h4>Payment History</h4> 
+                <div id="result"></div>
+                <div id="transactions-table" class="table-wrapper"></div>
+                <table class="table-striped table bg-dark" id="table"  data-show-columns="true" data-search="true" >
+                        <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Counter Party</th>
+                                <th scope="col">Date/Time</th>
+                                <th scope="col">Amount</th>
+                                {% if admin == true %}
+                                <th scope="col">Delete</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in transactions %}
+                            <tr data-id="{{ transaction.transactionId }}">
+                                <td>{{ transaction.transactionId }}</td>
+                                <td>{{ transaction.counterPartyName }}</td>
+                                <td>{{ transaction.created |date("jS F Y \\a\\t g:ia") }}</td>
+                                <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
+                                {% if admin == true %}
+                                <td style="text-align: center;"><a style="cursor: pointer; vertical-align: bottom;" class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button"><i class="text-danger bi bi-trash"></i>
+                                </a></td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+            </div>
         </div>
     </div>
+
 {% else %}
 {% include 'parts/unauthorized.html.twig' %}
 {% endif %}
