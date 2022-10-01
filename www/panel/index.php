@@ -5,13 +5,17 @@
     $debts = [];
     $remaining = 0; 
     
+
+
     if(LoggedIn()) {
-        if (isset($_POST['submit'])) {  
-            try {
-                $db->safeQuery('UPDATE users SET name= ? WHERE discord_id = ?',[$_POST['name'], $_SESSION['userData']['discord_id']]);
-                $status = MysqlSuccess("Profile");
-            } catch (Exception $e) {
-                $status = MysqlError("Error updating Profile: " . $e->getMessage());
+        if (isset($_POST['submit'])) {
+            if($_POST['action'] == "update") {
+                try {
+                    $db->safeQuery('UPDATE users SET name= ? WHERE discord_id = ?',[$_POST['name'], $_SESSION['userData']['discord_id']]);
+                    $status = MysqlSuccess("Profile");
+                } catch (Exception $e) {
+                    $status = MysqlError("Error updating Profile: " . $e->getMessage());
+                }
             }
         }
 

@@ -1,0 +1,7 @@
+{% if admin == true %}
+<button type="button" data-type="{{ type }}" data-id="{{ id }}" id="deletebtn" class="float-end btn btn-danger mt-1 rounded-3 ms-1" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash" ></i></button>
+<button type="button" id="editbtn" class="float-end btn btn-primary mt-1 rounded-3 me-1"><i class="bi bi-pencil-square"></i></button>
+<button type="button" data-type="{{ type }}" data-id="{{ id }}" id="updatebtn" class="action_update float-end btn btn-success mt-1 rounded-3 ms-1" type="button"><i class="bi bi-check-circle"></i></button>
+<button type="button" id="cancelbtn" class="float-end btn btn-danger mt-1 rounded-3 me-1"><i class="bi bi-x-circle"></i></button>
+{% include 'modals/delete.html.twig' %}
+{% endif %}

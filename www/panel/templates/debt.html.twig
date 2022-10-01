@@ -2,7 +2,8 @@
 {% if details is not empty %}
     <div class="mt-4 card mb-3">
         <div class="card-header text-center bg-cyan">
-            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-3">Debt</span>
+            <span class="float-start bg-dark p-2 d-block fs-6 mt-1 rounded-3">Debt</span>
+            {% include 'parts/header_buttons.html.twig' with {'type': 'debt', 'name': details.debt, 'id': details.id} %}
             <h3 class="card-title text-white">
                 {{ details.debt }}
             </h3>
@@ -29,21 +30,21 @@
                     <div class="card card-body mb-2 bg-dark">
                         <div class="col fw-bold">
                             Start Amount:
-                            £<span name="start_amount" class="editablenum fw-normal">{{ details.start_amount|number_format(2, '.', ',') }}</span>
+                            <span class="fw-normal">£</span><span name="start_amount" class="editablenum fw-normal">{{ details.start_amount|number_format(2, '.', ',') }}</span>
                         </div>
                     </div>
 
                     <div class="card card-body mb-2 bg-dark">
                         <div class="col fw-bold">
                             Remaining Amount:
-                            £<span name="amount" class="editablenum fw-normal">{{ details.amount|number_format(2, '.', ',') }}</span>
+                            <span class="fw-normal">£</span><span name="amount" class="editablenum fw-normal">{{ details.amount|number_format(2, '.', ',') }}</span>
                         </div>
                     </div>
 
                     <div class="card card-body mb-2 bg-dark">
                         <div class="col fw-bold">
                             Payment:
-                            £<span name="payment" class="editable fw-normal">{{ details.payment|number_format(2, '.', ',') }}</span>
+                            <span class="fw-normal">£</span><span name="payment" class="editable fw-normal">{{ details.payment|number_format(2, '.', ',') }}</span>
                         </div>
                     </div>
 
@@ -75,19 +76,11 @@
                             <span name="details" class="editabletextarea fw-normal d-block px-4">{{ details.details|nl2br }}</span>
                         </div>
                     </div>
-
-                    {% if admin == true %}
-                    <div class="float-end me-2 my-2">
-                        <button type="button" id="edit" class="btn btn-lg btn-primary align-bottom"><i class="bi bi-pencil-square me-2"></i>Edit</button>
-                        <button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
-                        <a id="updatebtn" class="action_update btn btn-success btn-lg" data-type="debt" type="button">Update</a>
-                    </div>
-
-                    {% include 'modals/delete.html.twig' with {'type': 'debt', 'name': details.debt, 'id': details.id} %}
-                    {% endif %}  
                 </div>
 
-
+                {% if admin == true %}
+                {% include 'modals/delete.html.twig' with {'type': 'debt', 'name': details.debt, 'id': details.id} %}
+                {% endif %}
                 </form>
             </div>
             <div class="col-12 col-md-6"> 
