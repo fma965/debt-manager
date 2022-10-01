@@ -2,7 +2,7 @@
     require_once 'init.php';
 
     if (!isset($_REQUEST['id']) || isset($_REQUEST['id']) && !is_numeric($_REQUEST['id'])) {
-        header("Location: /");
+        $_SESSION['admin'] ? header("Location: /admin/new.php?type=user") : header("Location: /");
         exit; 
     }
 

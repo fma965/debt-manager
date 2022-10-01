@@ -1,52 +1,3 @@
-$("#edit").click(function() {
-   $("#placeholder").show();
-   
-   $('.editablenum').each(function() {
-       var itemData = $.trim($(this).text()).replace(/,/g, '');
-       itemData = itemData.replace(",", "");
-       var itemClass = $(this).attr('class');
-       var itemName = $(this).attr('name');
-       var input = $('<input></input>');
-       input.attr('step', '0.01').addClass(itemClass).val(itemData).attr('name', itemName).attr('type', 'number').addClass('form-control');
-       $(this).replaceWith(input);
-   });
-
-   $('.editable').each(function() {
-       var itemData = $.trim($(this).text());
-       var itemClass = $(this).attr('class');
-       var itemName = $(this).attr('name');
-       var input = $('<input></input>');
-       input.addClass(itemClass).val(itemData).attr('name', itemName).attr('type', 'text').addClass('form-control');
-       $(this).replaceWith(input);
-   });
-
-   $('.editabletextarea').each(function() {
-       var itemData = $.trim($(this).text());
-       var itemClass = $(this).attr('class');
-       var itemName = $(this).attr('name');
-       var input = $('<textarea></textarea>');
-       input.addClass(itemClass).val(itemData).attr('name', itemName).addClass('form-control').css('height', '200px').css('width', '100%');
-       $(this).replaceWith(input);
-   });
-   
-   $('.debt-name').each(function() {
-       $(this).hide();
-   });
-
-   $('.debt-name[data-id]').each(function() {
-       $("option[value=" + $(this).attr("data-id") + "]").attr('selected', 'selected');
-   });
-
-   $("option[value=" + $('.debt-name[data-id]').attr("data-id") + "]").attr('selected', 'selected');
-   $("#cancel").show();
-   $("#edit").hide();
-   $("#updatebtn").show();
-});
-
-$("#cancel").click(function() {
-   location.reload();
-});
-
 $(document).ready(function(){
     $('#table').bootstrapTable({
         classes: "table table-striped table-hover"
@@ -107,19 +58,65 @@ $(document).ready(function(){
     });
 });
 
+$("#edit").click(function() {
+   $("#placeholder").show();
+   
+   $('.editablenum').each(function() {
+       var itemData = $.trim($(this).text()).replace(/,/g, '');
+       itemData = itemData.replace(",", "");
+       var itemClass = $(this).attr('class');
+       var itemName = $(this).attr('name');
+       var input = $('<input></input>');
+       input.attr('step', '0.01').addClass(itemClass).val(itemData).attr('name', itemName).attr('type', 'number').addClass('form-control');
+       $(this).replaceWith(input);
+   });
+
+   $('.editable').each(function() {
+       var itemData = $.trim($(this).text());
+       var itemClass = $(this).attr('class');
+       var itemName = $(this).attr('name');
+       var input = $('<input></input>');
+       input.addClass(itemClass).val(itemData).attr('name', itemName).attr('type', 'text').addClass('form-control');
+       $(this).replaceWith(input);
+   });
+
+   $('.editabletextarea').each(function() {
+       var itemData = $.trim($(this).text());
+       var itemClass = $(this).attr('class');
+       var itemName = $(this).attr('name');
+       var input = $('<textarea></textarea>');
+       input.addClass(itemClass).val(itemData).attr('name', itemName).addClass('form-control').css('height', '200px').css('width', '100%');
+       $(this).replaceWith(input);
+   });
+   
+   $('.item-name').each(function() {
+       $(this).hide();
+   });
+
+   $('.item-name[data-id]').each(function() {
+       $("option[value=" + $(this).attr("data-id") + "]").attr('selected', 'selected');
+   });
+
+   $("option[value=" + $('.item-name[data-id]').attr("data-id") + "]").attr('selected', 'selected');
+   
+   $("#edit").hide();
+   $("#cancel").show();
+   $("#updatebtn").show();
+});
+
+$("#cancel").click(function() {
+   location.reload();
+});
+
 function buttons () {
     return {
       btnAdd: {
         text: 'Add Transaction',
         event: function () {
-            var myModal = new bootstrap.Modal(document.getElementById('newTransaction'))
-            myModal.show();
+            new bootstrap.Modal(document.getElementById('newTransaction')).show();
         },
         icon: 'bi bi-file-earmark-plus',
-        attributes: {
-          title: 'Add a a new transaction to this debt',
-          id: 'new',
-        }
+        attributes: {id: 'new'}
       }
     }
   }

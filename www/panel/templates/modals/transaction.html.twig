@@ -9,19 +9,12 @@
             <form id="new" class="form-horizontal" action="" method="post">
                 <div class="card-body">
                     <div class='col-12 col-md-12'>
-
+      
                         <div class="card card-body mb-2 bg-dark">
                             <div class="col fw-bold">
                                 Counter Party: <input name="counterPartyName" type="text" class="form-control" required/>
                             </div>
                         </div>
-
-                        <div class="card card-body mb-2 bg-dark">
-                            <div class="col fw-bold">
-                                Transaction ID:<input name="transactionId" class="form-control" required/>
-                            </div>
-                        </div>
-        
         
                         <div class="card card-body mb-2 bg-dark">
                             <div class="col fw-bold">
@@ -34,7 +27,12 @@
                                 Date: <input name="created" type="datetime-local" class="form-control" value="{{ "now"|date('Y-m-d\\TH:i') }}" required/>
                             </div>
                         </div>	
-                        
+
+                        <div class="card card-body mb-2 bg-dark">
+                            <div class="col fw-bold">
+                                Transaction ID:<input name="transactionId" class="form-control" value="{{ 'now'|date('U') }}" required/>
+                            </div>
+                        </div>
 
                         <input name="reference" type="hidden" class="form-control" value="{{ details.reference }}" required/>
                     </div>

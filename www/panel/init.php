@@ -25,10 +25,7 @@
             echo $twig->render('unauthorized.html.twig');
             exit;
         }
-    } elseif(str_starts_with(dirname($_SERVER['SCRIPT_NAME']),"/admin")) {
-        echo $twig->render('unauthorized.html.twig');
-        exit;
-    } elseif(!in_array($script_name, ["index.php", "login.php", "logout.php"])) {
+    } elseif(str_starts_with(dirname($_SERVER['SCRIPT_NAME']),"/admin") || !in_array($script_name, ["index.php", "login.php", "logout.php"])) {
         echo $twig->render('unauthorized.html.twig');
         exit;
     }

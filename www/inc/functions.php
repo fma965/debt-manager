@@ -4,7 +4,6 @@
 			exit;
 	};
 
-	// Simple function to check multiple conditions and return a bit of HTML.
 	function HasPaid($paid,$cost) {
 		if($paid > $cost) {
 			return 3;
