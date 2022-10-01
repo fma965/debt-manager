@@ -14,7 +14,7 @@
                         }
                     }
 
-                    $db->safeQuery('UPDATE users SET name=?, notes=? WHERE id=?',[$_POST['name'], $_POST['notes'], $_POST['id']]);
+                    $db->safeQuery('UPDATE users SET name=?, notes=?, discord_id=? WHERE id=?',[$_POST['name'], $_POST['notes'], $_POST['discord_id'], $_POST['id']]);
 					break;
 				case "debt":
 					$db->safeQuery('DELETE FROM user_debts WHERE debt_id=?',[$_POST['id']]);
