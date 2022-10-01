@@ -12,7 +12,7 @@
                         <div class="col fw-bold">
                             Name: 
                             <span name="name" id="name" class="editable fw-normal d-inline-block w-auto">{{ details.name }}</span>&nbsp;
-                            <button type="button" id="edit" class="btn btn-sm btn-primary align-bottom">📝</button>
+                            <button type="button" id="edit" class="btn btn-sm btn-primary align-bottom"><i class="bi bi-pencil-square"></i></button>
                             <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-success align-bottom"/> &nbsp;
                             <button type="button" id="cancel" class="btn btn-danger align-bottom">Cancel</button>
                         </div>
@@ -39,7 +39,7 @@
         
         <div class="mt-4 card mt-3">
             <div class="card-header text-center bg-cyan text-white">
-                <h3 class='card-title d-inline-block'><span class="fs-3">💷 Debts</span></h3>
+                <h3 class='card-title d-inline-block'><i class="bi bi-cash-coin me-2 align-middle"></i>Debts</h3>
             </div>
             {% if debts is not empty %}
             <div class="card-body">       

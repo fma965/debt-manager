@@ -76,3 +76,36 @@ a:hover {
 .bg-cyan {
 	background-color: var(--bs-cyan);
 }
+
+@media(prefers-color-scheme: light) {
+	.bg-dark {
+		--bs-bg-opacity: 1;
+		background-color: var(--bs-gray-100)!important;
+	}
+	nav.bg-dark {
+		-bs-bg-opacity: 1;
+    	background-color: rgba(var(--bs-dark-rgb),var(--bs-bg-opacity))!important;
+	}
+	
+}
+
+.fixed-table-loading {
+    visibility: hidden;
+    top: 0px;
+    display: none;
+}
+
+.loading-wrap {
+    visibility: hidden;
+    display: none;
+}
+
+.table-loading {
+    visibility: hidden;
+    display: none;
+}
+
+.loading {
+    visibility: hidden;
+    display: none;
+}

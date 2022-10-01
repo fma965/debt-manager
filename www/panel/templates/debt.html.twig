@@ -2,19 +2,14 @@
 {% if details is not empty %}
 <form class="form-horizontal" action="" method="post">
     <div class="mt-4 card mb-3">
-        <div class="card-header text-center bg-cyan text-white">
-            <h3 class='panel-title'><span style='font-size: 20pt;'>Debt: {{ details.debt }}</span> &nbsp; 
-                {% if admin == true %}
-                <button type="button" data-id="{{ details.id }}" data-type="debt" class="float-end btn btn-danger delete"><i class="bi bi-trash align-middle me-1 fs-6" ></i>Delete</button>
-                <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
-                <input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp; 
-                <button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button>
-                {% endif %}
+        <div class="card-header text-center bg-cyan">
+            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-pill">Debt</span>
+            <h3 class="card-title text-white">
+                {{ details.debt }}
             </h3>
         </div>
         <div class="row">
-            <div class="card-body col-12 col-md-6">
-            
+            <div class="card-body col-12 col-md-6"> 
                 <input name="id" type="hidden" value="{{ details.id }}"/>
                 
                 <div class="card card-body mb-2 bg-dark"><div class="col fw-bold">
@@ -57,14 +52,26 @@
                         <span name="details" class="editabletextarea fw-normal d-block px-4">{{ details.details|nl2br }}</span>
                     </div>
                 </div>
+
+                {% if admin == true %}
+                <div class="float-end me-2">
+                    <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-lg btn-primary"><i class="bi bi-pencil-square me-2"></i>Edit</button>
+                    <button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
+                    <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success"/>
+                </div>
+
+                <div class="text-start ms-2">
+                    <button type="button" data-id="{{ details.id }}" data-type="debt" class="btn btn-lg btn-danger delete"><i class="bi bi-trash align-middle me-2" ></i>Delete</button>                    
+                </div>
+                {% endif %}  
             </div>
-        </form>
             <div class="card-body col-12 col-md-6">
                 <h4>Payment History</h4> 
                 <div id="result"></div>
-                <div id="transactions-table" class="table-wrapper"></div>
-                <table class="table-striped table bg-dark" id="table"  data-show-columns="true" data-search="true" >
-                        <thead>
+                <div class="row">
+                    <table class="table-striped bg-dark" id="table"  data-toggle="table" data-show-columns="true" data-search="true" data-check-on-init="true"  data-height="470"
+                    data-pagination="true">
+                        <thead class="bg-primary text-white">
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Counter Party</th>
@@ -90,10 +97,16 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                </div>
+                
+                <div class="float-end">
+                    <button type="button" id="new" class="btn btn-lg btn-success mt-2 me-2"><i class="bi bi-file-earmark-plus me-1"></i>New Transaction</button>
+                </div>
+                
             </div>
-        </div>
+        </div>     
     </div>
-
+</form>
 {% else %}
 {% include 'parts/unauthorized.html.twig' %}
 {% endif %}

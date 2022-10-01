@@ -2,72 +2,77 @@
 {% if details is not empty %}
 <form class="form-horizontal" action="" method="post">
 	<div class="mt-4 card mb-3">
-		<div class="card-header text-center bg-cyan text-white">
-			<h3 class='panel-title'><span style='font-size: 20pt;'>User: {{ details.name }}</span> &nbsp; 
-				{% if admin == true %}
-				<button type="button" data-id="{{ details.id }}" data-type="user" class="float-end btn btn-danger delete"><i class="bi bi-trash align-middle me-1 fs-6" ></i>Delete</button>
-                <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-primary">Edit</button>&nbsp;
-				<input id="submit" type="submit" value="Submit" name="submit" style="vertical-align: bottom;" class="btn btn-success"/> &nbsp; 
-				<button type="button" id="cancel" style="vertical-align: bottom;" class="btn btn-danger">Cancel</button>
-			</h3>
-				{% endif %}
-		</div>
-		<div class="row">
-			<div class="card-body col-12 col-md-6">
-				
-					<input name="id" type="hidden" value="{{ details.id }}"/>
+        <div class="card-header text-center bg-cyan">
+            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-pill">User</span>
+            <h3 class="card-title text-white">
+                {{ details.name }}
+            </h3>
+        </div>
+		<div class="card-body col-12">
+			<input name="id" type="hidden" value="{{ details.id }}"/>
 					
-					<div class="card card-body mb-2 bg-dark">
-						<div class="col fw-bold">
-							Name:
-							<span name="name" class="editable fw-normal">{{ details.name }}</span>
-						</div>
-					</div>
-
-					<div class="card card-body mb-2 bg-dark">
-						<div class="col fw-bold">
-							Discord ID:
-							<span name="discord_id" class="editablenum fw-normal">{{ details.discord_id }}</span>
-						</div>
-					</div>
-
-					<div class="card card-body mb-2 bg-dark">
-						<div class="col fw-bold">
-							Debts: 
-							<select id='placeholder' multiple class='form-control' name="debts[]">
-								{% for debt in alldebts %}
-									<option value="{{ debt.id }}">{{ debt.debt }} (ID:{{ debt.id }})</option>
-								{% endfor %}
-							</select>
-							{% if debts is not empty %}
-								{% for debt in debts %}
-								<div class="debt px-4">
-									<div class="row" >
-										<div class=" col-12 col-md-6" >
-											<span class="debt-name inline fw-normal" data-selected="true" data-id="{{ debt.id }}">{{ debt.debt }} </span>
-										</div>
-									</div>
-								</div>
-								{% endfor %}
-							{% endif %}
-						</div>
-					</div>
-							
-					<div class="card card-body mb-2 bg-dark">
-						<div class="col fw-bold">
-							Total Remaing Debt Amount: 
-							£<span name="cost" class="editablenum fw-normal">{{ details.total_cost|number_format(2, '.', ',') }}</span>
-						</div>
-					</div>
-
-					<div class="card card-body mb-2 bg-dark">
-						<div class="col fw-bold">
-							Notes: 
-							<span name="notes" class="editabletextarea fw-normal">{{ details.notes|nl2br }}</span>
-						</div>
-					</div>
+			<div class="card card-body mb-2 bg-dark">
+				<div class="col fw-bold">
+					Name:
+					<span name="name" class="editable fw-normal">{{ details.name }}</span>
 				</div>
 			</div>
+
+			<div class="card card-body mb-2 bg-dark">
+				<div class="col fw-bold">
+					Discord ID:
+					<span name="discord_id" class="editablenum fw-normal">{{ details.discord_id }}</span>
+				</div>
+			</div>
+
+			<div class="card card-body mb-2 bg-dark">
+				<div class="col fw-bold">
+					Debts: 
+					<select id='placeholder' multiple class='form-control' name="debts[]">
+						{% for debt in alldebts %}
+							<option value="{{ debt.id }}">{{ debt.debt }} (ID:{{ debt.id }})</option>
+						{% endfor %}
+					</select>
+					{% if debts is not empty %}
+						{% for debt in debts %}
+						<div class="debt px-4">
+							<div class="row" >
+								<div class=" col-12 col-md-6" >
+									<span class="debt-name inline fw-normal" data-selected="true" data-id="{{ debt.id }}">{{ debt.debt }} </span>
+								</div>
+							</div>
+						</div>
+						{% endfor %}
+					{% endif %}
+				</div>
+			</div>
+					
+			<div class="card card-body mb-2 bg-dark">
+				<div class="col fw-bold">
+					Total Remaing Debt Amount: 
+					£<span name="cost" class="editablenum fw-normal">{{ details.total_cost|number_format(2, '.', ',') }}</span>
+				</div>
+			</div>
+
+			<div class="card card-body mb-2 bg-dark">
+				<div class="col fw-bold">
+					Notes: 
+					<span name="notes" class="editabletextarea fw-normal">{{ details.notes|nl2br }}</span>
+				</div>
+			</div>
+
+			{% if admin == true %}
+			<div class="float-end me-2">
+				<button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-lg btn-primary"><i class="bi bi-pencil-square me-2"></i>Edit</button>
+				<button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
+				<input id="submit" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success"/>
+			</div>
+
+			<div class="text-start ms-2">
+				<button type="button" data-id="{{ details.id }}" data-type="debt" class="btn btn-lg btn-danger delete"><i class="bi bi-trash align-middle me-2" ></i>Delete</button>                    
+			</div>
+			{% endif %}
+
 		</div>
 	</div>
 </form>

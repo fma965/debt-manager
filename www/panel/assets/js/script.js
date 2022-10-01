@@ -1,5 +1,7 @@
 $(function() {
-    $('#table').bootstrapTable()
+    $('#table').bootstrapTable({
+        classes: "table table-striped table-hover"
+      })
   })
 
 $("#edit").click(function() {
