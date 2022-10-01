@@ -3,7 +3,8 @@
 	<form id="new" class="form-horizontal" action="" method="post">
 		<div class="mt-4 card mb-3">
 			<div class="card-header text-center bg-cyan text-white">
-				<h3 class='panel-title'><span style='font-size: 20pt;'>New Debt</span></h3>
+				<button type="button" id="createbtn" data-type="debt" class="action_create float-end btn btn-success mt-1 rounded-3 ms-1" type="button"><i class="bi bi-check-circle"></i></button>
+				<h3 class="card-title">New Debt</h3>
 			</div>
 		<div class="card-body">
 			<div class='col-12 col-md-12'>
@@ -34,10 +35,6 @@
 				<div class="card card-body mb-2 bg-dark">
 					<div class="col fw-bold">Details:<textarea id="details" name="details" class="form-control" style="height:150px;"></textarea>
 					</div>
-				</div>
-				
-				<div class="text-end">
-					<a class="action_create btn btn-success btn-lg" data-type="debt" type="button"><i class="bi bi-file-earmark-plus me-2"></i>Create</a>
 				</div>
 
 			</div>

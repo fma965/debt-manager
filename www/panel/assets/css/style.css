@@ -114,3 +114,17 @@ a:hover {
 input[type="datetime-local" i]::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
+
+.progress {
+	position: relative;
+}
+
+.progress-label {
+	color: white;
+	position: absolute;
+	left: 0;
+	right: 0;
+	text-align: center;
+	height: 100%;
+	top: 7px;
+}

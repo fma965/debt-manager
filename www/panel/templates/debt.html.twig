@@ -39,11 +39,15 @@
                             Remaining Amount:
                             <span class="fw-normal">£</span><span name="amount" class="editablenum fw-normal">{{ details.amount|number_format(2, '.', ',') }}</span>
                         </div>
+                        {% include 'parts/progress.html.twig' with {'start': details.start_amount, 'amount': details.amount, 'payment': details.payment} %}
+                        
                     </div>
+
+                    
 
                     <div class="card card-body mb-2 bg-dark">
                         <div class="col fw-bold">
-                            Payment:
+                            Monthly Payment:
                             <span class="fw-normal">£</span><span name="payment" class="editable fw-normal">{{ details.payment|number_format(2, '.', ',') }}</span>
                         </div>
                     </div>
@@ -77,10 +81,7 @@
                         </div>
                     </div>
                 </div>
-
-                {% if admin == true %}
-                {% include 'modals/delete.html.twig' with {'type': 'debt', 'name': details.debt, 'id': details.id} %}
-                {% endif %}
+                
                 </form>
             </div>
             <div class="col-12 col-md-6"> 
