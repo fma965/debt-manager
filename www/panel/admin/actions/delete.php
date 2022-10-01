@@ -1,5 +1,5 @@
 <?php 
-	require_once '../init.php';
+	require_once '../../init.php';
 
 	if (isset($_POST['id'])) {
 		try {
@@ -14,6 +14,18 @@
 					break;
 				case "transaction":
 					$db->safeQuery('DELETE FROM transactions WHERE transactionId=?',[$_POST['id']]);
+	
+					$lastTransaction = $db->row('SELECT * FROM transactions WHERE reference = ? ORDER BY created DESC LIMIT 1;', [$_POST['reference']]);
+					
+					if ($lastTransaction) {				
+						$db->safeQuery('UPDATE debts SET amount=amount + ?, lastpaymentdate=?, lastpaymentamount=? WHERE reference=?',[
+							$_POST['amount'], $lastTransaction['created'], $lastTransaction['amount'], $_POST['reference']
+						]);
+					}  else {
+						$db->safeQuery('UPDATE debts SET amount=amount + ?, lastpaymentdate=NULL, lastpaymentamount=NULL WHERE reference=?',[
+							$_POST['amount'], $_POST['reference']
+						]);
+					}
 					break;
 				default:
 					die("Error");
@@ -23,5 +35,8 @@
 			$message = 'Error deleting ' . ucfirst($_POST['type']) . ": " . $e->getMessage();
 			echo json_encode(['status' => 'error', 'message' => $message]);
 		}	
+	} else {
+		http_response_code(500);
+		exit;
 	}
 ?>

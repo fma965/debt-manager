@@ -65,7 +65,12 @@
                 $db->safeQuery('INSERT INTO users (name, discord_id, avatar) VALUES (?, ?, ?)',[$result['username'], $result['id']], $result['avatar']);
             }
 
-            header("Location: /");
+            if($_SESSION['admin']) {
+                header("Location: /admin");
+            } else {
+                header("Location: /");
+            }
+            
             exit; 
         } catch (Exception $e) {
             $status = MysqlError(template:"main.html.twig");

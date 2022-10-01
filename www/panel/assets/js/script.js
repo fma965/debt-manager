@@ -46,7 +46,7 @@ $("#edit").click(function() {
    $("option[value=" + $('.debt-name[data-id]').attr("data-id") + "]").attr('selected', 'selected');
    $("#cancel").show();
    $("#edit").hide();
-   $("#submit").show();
+   $("#updatebtn").show();
 });
 
 $("#cancel").click(function() {
@@ -55,27 +55,91 @@ $("#cancel").click(function() {
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
+
+    $(".action_delete").click(function() {
+        var id = $(this).attr("data-id")
+        var type = $(this).attr("data-type");
+        var reference = $(this).attr("data-reference");
+        var amount = $(this).attr("data-amount");
+        $.ajax({ 
+            type: 'POST', 
+            url: '/admin/actions/delete.php', 
+            data: { id:  id, type: type, reference: reference, amount: amount}, 
+            dataType: 'json',
+            success: function (data) {                 
+                $("tr[data-id='"+id+"'").remove();
+                if(type == "transaction") {
+                    $('<form action="" method="POST">'+
+                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                    '</form>').appendTo($(document.body)).submit();
+                } else {
+                    $('<form action="/admin/" method="POST">'+
+                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                    '</form>').appendTo($(document.body)).submit();
+                }
+            },
+        });        
+    });
+
+    $(".action_create").click(function() {
+        var type = $(this).attr("data-type");
+        $.ajax({ 
+            type: 'POST', 
+            url: '/admin/actions/create.php', 
+            data: $("form#new").serialize() + "&type="+ type, 
+            dataType: 'json',
+            success: function (data) { 
+                if(type == "transaction") {
+                    $('<form action="" method="POST">'+
+                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                    '</form>').appendTo($(document.body)).submit();
+                } else {
+                    $('<form action="/'+type+'.php?id='+data['id']+'" method="POST">'+
+                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                    '</form>').appendTo($(document.body)).submit();
+                }
+            },
+        });        
+    });
+
+    $(".action_update").click(function() {
+        var type = $(this).attr("data-type");
+        $.ajax({ 
+            type: 'POST', 
+            url: '/admin/actions/update.php', 
+            data: $("form#update").serialize() + "&type="+ type, 
+            dataType: 'json',
+            success: function (data) { 
+                if(type == "transaction") {
+                    // 
+                } else {
+                    $('<form action="" method="POST">'+
+                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                    '</form>').appendTo($(document.body)).submit();
+                }
+            },
+        });        
+    });
 });
 
-$(".delete").click(function() {
-    var id = $(this).attr("data-id")
-    var type = $(this).attr("data-type");
-    $.ajax({ 
-        type: 'POST', 
-        url: '/admin/delete.php', 
-        data: { id:  id, type: type}, 
-        dataType: 'json',
-        success: function (data) { 
-            $("tr[data-id='"+id+"'").remove();
-            if(type == "transaction") {
-                var status = data['status'] == 'error' ? 'danger' : data['status']; 
-                $( "#result" ).empty().append('<div id="status" class="alert alert-' + status +'" role="alert">' + data['message'] + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
-            } else {
-                $('<form action="/admin/" method="POST">'+
-                '<input type="hidden" name="status" value="' + data['status'] + '">'+
-                '<input type="hidden" name="message" value="' + data['message'] + '">'+
-                '</form>').appendTo($(document.body)).submit();
-            }
+function buttons () {
+    return {
+      btnAdd: {
+        text: 'Add Transaction',
+        event: function () {
+            var myModal = new bootstrap.Modal(document.getElementById('newTransaction'))
+            myModal.show();
         },
-    });        
-});
+        icon: 'bi bi-file-earmark-plus',
+        attributes: {
+          title: 'Add a a new transaction to this debt',
+          id: 'new',
+        }
+      }
+    }
+  }

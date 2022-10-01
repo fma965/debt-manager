@@ -1,6 +1,5 @@
 {% include 'parts/header.html.twig' %}
 {% if details is not empty %}
-<form class="form-horizontal" action="" method="post">
     <div class="mt-4 card mb-3">
         <div class="card-header text-center bg-cyan">
             <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-3">Debt</span>
@@ -10,6 +9,7 @@
         </div>
         <div class="row">
             <div class="col-12 col-md-6"> 
+                <form id="update" class="form-horizontal" action="" method="post">
                 <div class="card-body">
                         <input name="id" type="hidden" value="{{ details.id }}"/>
                     
@@ -55,33 +55,34 @@
                     </div>
 
                     {% if admin == true %}
-                    <div class="float-end me-2">
+                    <div class="float-end me-2 my-2">
                         <button type="button" id="edit" class="btn btn-lg btn-primary align-bottom"><i class="bi bi-pencil-square me-2"></i>Edit</button>
                         <button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
-                        <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success"/>
+                        <a id="updatebtn" class="action_update btn btn-success btn-lg" data-type="debt" type="button">Update</a>
                     </div>
 
-                    <div class="text-start ms-2">
-                        <button type="button" data-id="{{ details.id }}" data-type="debt" class="btn btn-lg btn-danger delete"><i class="bi bi-trash align-middle me-2" ></i>Delete</button>                    
-                    </div>
+                    {% include 'modals/delete.html.twig' with {'type': 'debt', 'name': details.debt, 'id': details.id} %}
                     {% endif %}  
                 </div>
+
+
+                </form>
             </div>
             <div class="col-12 col-md-6"> 
                 <div class="card-body">
                     <h4>Payment History</h4> 
                     <div id="result"></div>
                     <div class="row">
-                        <table class="table-striped bg-dark" id="table"  data-toggle="table" data-show-columns="true" data-search="true" data-check-on-init="true"  data-height="470"
+                        <table class="table-striped bg-dark " id="table"  data-toggle="table" {% if admin == true %} data-buttons="buttons" {% endif %}  data-show-button-text="true" data-show-columns="true" data-search="true" data-check-on-init="true" 
                         data-pagination="true">
-                            <thead class="bg-primary text-white">
+                            <thead class="bg-primary ">
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Counter Party</th>
-                                    <th scope="col">Date/Time</th>
-                                    <th scope="col">Amount</th>
+                                    <th scope="col" data-field="id">ID</th>
+                                    <th scope="col" data-field="counterparty">Counter Party</th>
+                                    <th scope="col" data-field="date">Date/Time</th>
+                                    <th scope="col" data-field="amount">Amount</th>
                                     {% if admin == true %}
-                                    <th scope="col">Delete</th>
+                                    <th scope="col" data-field="delete">Delete</th>
                                     {% endif %}
                                 </tr>
                             </thead>
@@ -90,10 +91,10 @@
                                 <tr data-id="{{ transaction.transactionId }}">
                                     <td>{{ transaction.transactionId }}</td>
                                     <td>{{ transaction.counterPartyName }}</td>
-                                    <td>{{ transaction.created |date("jS F Y \\a\\t g:ia") }}</td>
+                                    <td>{{ transaction.created |date("jS F Y") }}<br>{{ transaction.created |date("g:ia") }}</td>
                                     <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
                                     {% if admin == true %}
-                                    <td class="text-center"><a class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button"><i class="text-danger bi bi-trash"></i>
+                                    <td class="text-center"><a class="action_delete" data-type="transaction" data-amount="{{ transaction.amount|number_format(2, '.', ',') }}" data-reference="{{ details.reference }}" data-id="{{ transaction.transactionId }}" type="button"><i class="text-danger bi bi-trash"></i>
                                     </a></td>
                                     {% endif %}
                                 </tr>
@@ -101,15 +102,12 @@
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="float-end">
-                        <button type="button" id="new" class="btn btn-lg btn-success mt-2 me-2"><i class="bi bi-file-earmark-plus me-1"></i>New Transaction</button>
-                    </div>
                 </div>
             </div>
         </div>     
     </div>
-</form>
+
+{% include 'modals/transaction.html.twig' %}
 {% else %}
 {% include 'parts/unauthorized.html.twig' %}
 {% endif %}

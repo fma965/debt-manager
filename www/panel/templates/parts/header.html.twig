@@ -54,16 +54,10 @@
 			}
 
 			function updateUI(color_p, id = 'css') {
-			toggle_btn.checked = color_p === 'dark';
 
 			if (isCssInit) {
 				const el = document.querySelector('#'+id);
 				const data = el.dataset;
-				if (toggle_btn.checked) {
-				el.setAttribute('href', data.hrefDark)
-				} else {
-				el.setAttribute('href', data.hrefLight);
-				}
 				data.colorScheme = color_p;
 			}
 			}
@@ -89,15 +83,6 @@
 			el.setAttribute('id', id);
 			el_o.remove();
 			}
-
-			toggle_btn.addEventListener('click', () => {
-			const color_p = toggle_btn.checked ? 'dark' : 'light';
-
-			if (!isCssInit) initColorCSS(color_p);
-
-			setColorPreference(color_p, true);
-			updateUI(color_p);
-			});
 
 			document.addEventListener("keypress", function(event){
 			var keyName = event.key;
@@ -144,8 +129,8 @@
 						<ul class="navbar-nav me-auto mb-2 mb-md-0">
 						  {% if admin == true %}
 						<li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
-						<li class="nav-item"><a href="/admin/newuser.php" class="nav-link">New User</a></li>
-						<li class="nav-item"><a href="/admin/newdebt.php" class="nav-link">New Debt</a></li>
+						<li class="nav-item"><a href="/admin/new.php?type=user" class="nav-link">New User</a></li>
+						<li class="nav-item"><a href="/admin/new.php?type=debt" class="nav-link">New Debt</a></li>
 						{% endif %}
 						</ul>
 					  </div>

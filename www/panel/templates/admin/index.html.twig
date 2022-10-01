@@ -64,7 +64,9 @@
     {% for user in users %} 
     <div class="col-lg-4 col-sm-6 col-xs-12">
         <div class="justify-content-between bg-dark p-4 my-2">
+          {% if user.avatar is not empty %}
           <img class="me-3 align-bottom rounded-circle float-start" style="height:50px;" src="https://cdn.discordapp.com/avatars/{{ user.discord_id }}/{{ user.avatar }}.jpg"/>
+          {% endif %}
           <a href="/user.php?id={{ user.id }}">
             <h5>{{ user.name }}</h5>
           </a>

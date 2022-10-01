@@ -1,6 +1,7 @@
 #submit,
 #placeholder,
-#cancel {
+#cancel,
+#updatebtn {
 	display: none;
 }
 
@@ -108,4 +109,8 @@ a:hover {
 .loading {
     visibility: hidden;
     display: none;
+}
+
+input[type="datetime-local" i]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
 }

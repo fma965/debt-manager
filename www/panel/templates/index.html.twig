@@ -2,7 +2,7 @@
 {% if logged_in == true %}
         <div class="mt-4 card mb-3">
             <div class="card-header text-center bg-cyan text-white">
-                <img class="ms-1 align-bottom rounded-circle" style="height:50px;" src="{{ discord.avatar }}"/>
+                <img class="me-2 align-top rounded-circle" style="height:40px;" src="{{ discord.avatar }}"/>
                 <h3 class='card-title d-inline-block'><span class="fs-3">Welcome {{ details.name }}</span></h3>
             </div>
             <div class="card-body">
@@ -45,7 +45,7 @@
             <div class="card-body">       
             <div class="row">
                 {% for debt in debts %}
-                <div class="col-xs-12 col-lg-6 mb-2 ">
+                <div class="col-xs-12 col-lg-6 mb-4 ">
                     <div class="card-header">
                         <h3 class="text-center ">
                             <a href='debt.php?id={{ debt.id }}'>{{ debt.debt }}</a>
@@ -99,7 +99,7 @@
         {% endif %}
     </div>
 {% else %}
-<div class="p-5 my-4 rounded-3 bg-dark">
+<div class="card card-body p-5 my-4 rounded-3">
     <h1>Debt Manager</h1>
     <p>Please log in using your Discord Account to access your account and debt information!</p>
     <p><a href="/login.php"><button class="btn navbar-btn btn-info">Log In With Discord &nbsp; <i class="bi bi-box-arrow-in-right text-white align-middle fs-4"></i></button></a></p>

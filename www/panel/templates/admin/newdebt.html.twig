@@ -1,7 +1,6 @@
 {% include 'parts/header.html.twig' %}
 <div class='panel panel-info'>
-	<form class="form-horizontal" action="" method="post">
-
+	<form id="new" class="form-horizontal" action="" method="post">
 		<div class="mt-4 card mb-3">
 			<div class="card-header text-center bg-cyan text-white">
 				<h3 class='panel-title'><span style='font-size: 20pt;'>New Debt</span></h3>
@@ -38,9 +37,9 @@
 				</div>
 				
 				<div class="text-end">
-					<input id="submitnew" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success align-bottom"/>
+					<a class="action_create btn btn-success btn-lg" data-type="debt" type="button"><i class="bi bi-file-earmark-plus me-2"></i>Create</a>
 				</div>
-				
+
 			</div>
 		</div>
 	</form>

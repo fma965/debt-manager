@@ -5,17 +5,6 @@
         header("Location: /");
         exit; 
     }
-   
-    if (isset($_POST['submit'])) {
-        try {
-            $db->safeQuery('UPDATE debts SET debt=?, amount=?, start_amount=?, payment=?, details=?, reference=? WHERE id=?',[
-                $_POST['name'], $_POST['amount'], $_POST['start_amount'], $_POST['payment'], $_POST['details'], $_POST['reference'], $_POST['id']
-            ]);
-            $status = MysqlSuccess("Debt");
-        } catch (Exception $e) {
-            $status = MysqlError("Error updating Debt: " . $e->getMessage());
-        }
-    } 
 
     $authorized = false;
     $alltransactions = [];
