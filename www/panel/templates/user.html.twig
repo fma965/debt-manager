@@ -3,7 +3,7 @@
 <form class="form-horizontal" action="" method="post">
 	<div class="mt-4 card mb-3">
         <div class="card-header text-center bg-cyan">
-            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-pill">User</span>
+            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-3">User</span>
             <h3 class="card-title text-white">
                 {{ details.name }}
             </h3>
@@ -63,7 +63,7 @@
 
 			{% if admin == true %}
 			<div class="float-end me-2">
-				<button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-lg btn-primary"><i class="bi bi-pencil-square me-2"></i>Edit</button>
+				<button type="button" id="edit" class="btn btn-lg btn-primary align-bottom"><i class="bi bi-pencil-square me-2"></i>Edit</button>
 				<button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
 				<input id="submit" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success"/>
 			</div>

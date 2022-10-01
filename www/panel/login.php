@@ -58,9 +58,13 @@
 
         try {
             $id = $db->single('SELECT discord_id FROM users WHERE discord_id=?',[$result['id']]);
-            if (!is_numeric($id)) {
-                $db->safeQuery('INSERT INTO users (name, discord_id) VALUES (?, ?)',[$result['username'], $result['id']]);
+            
+            if (is_numeric($id)) {
+                $db->safeQuery('UPDATE users SET avatar=? WHERE discord_id=?',[$result['avatar'], $result['id']]);
+            } else {
+                $db->safeQuery('INSERT INTO users (name, discord_id, avatar) VALUES (?, ?, ?)',[$result['username'], $result['id']], $result['avatar']);
             }
+
             header("Location: /");
             exit; 
         } catch (Exception $e) {

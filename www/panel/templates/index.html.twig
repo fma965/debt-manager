@@ -2,7 +2,7 @@
 {% if logged_in == true %}
         <div class="mt-4 card mb-3">
             <div class="card-header text-center bg-cyan text-white">
-                <img style="border-radius: 50%; margin-right: 20px; height: 50px; vertical-align:bottom" src="{{ discord.avatar }}"/>
+                <img class="ms-1 align-bottom rounded-circle" style="height:50px;" src="{{ discord.avatar }}"/>
                 <h3 class='card-title d-inline-block'><span class="fs-3">Welcome {{ details.name }}</span></h3>
             </div>
             <div class="card-body">
@@ -85,7 +85,7 @@
                             </div>
                         </div>
                         <div class="col">
-                            <a href='debt.php?id={{ debt.id }}' style="vertical-align: bottom;" type="button" id="edit" class="float-end btn btn-primary">Details</a>
+                            <a href='debt.php?id={{ debt.id }}' type="button" id="edit" class="float-end btn btn-primary align-bottom">Details</a>
                         </div>
                     </div>
                 </div>

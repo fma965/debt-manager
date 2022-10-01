@@ -3,106 +3,109 @@
 <form class="form-horizontal" action="" method="post">
     <div class="mt-4 card mb-3">
         <div class="card-header text-center bg-cyan">
-            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-pill">Debt</span>
+            <span class="float-end bg-dark p-2 d-block fs-6 mt-1 rounded-3">Debt</span>
             <h3 class="card-title text-white">
                 {{ details.debt }}
             </h3>
         </div>
         <div class="row">
-            <div class="card-body col-12 col-md-6"> 
-                <input name="id" type="hidden" value="{{ details.id }}"/>
-                
-                <div class="card card-body mb-2 bg-dark"><div class="col fw-bold">
-                        Name:
-                        <span name="name" class="editable fw-normal">{{ details.debt }}</span>
+            <div class="col-12 col-md-6"> 
+                <div class="card-body">
+                        <input name="id" type="hidden" value="{{ details.id }}"/>
+                    
+                    <div class="card card-body mb-2 bg-dark"><div class="col fw-bold">
+                            Name:
+                            <span name="name" class="editable fw-normal">{{ details.debt }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card card-body mb-2 bg-dark">
-                    <div class="col fw-bold">
-                        Bank Reference:
-                        <span name="reference" class="editable fw-normal">{{ details.reference }}</span>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Bank Reference:
+                            <span name="reference" class="editable fw-normal">{{ details.reference }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card card-body mb-2 bg-dark">
-                    <div class="col fw-bold">
-                        Start Amount:
-                        £<span name="start_amount" class="editablenum fw-normal">{{ details.start_amount|number_format(2, '.', ',') }}</span>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Start Amount:
+                            £<span name="start_amount" class="editablenum fw-normal">{{ details.start_amount|number_format(2, '.', ',') }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card card-body mb-2 bg-dark">
-                    <div class="col fw-bold">
-                        Remaining Amount:
-                        £<span name="amount" class="editablenum fw-normal">{{ details.amount|number_format(2, '.', ',') }}</span>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Remaining Amount:
+                            £<span name="amount" class="editablenum fw-normal">{{ details.amount|number_format(2, '.', ',') }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card card-body mb-2 bg-dark">
-                    <div class="col fw-bold">
-                        Payment:
-                        £<span name="payment" class="editable fw-normal">{{ details.payment|number_format(2, '.', ',') }}</span>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Payment:
+                            £<span name="payment" class="editable fw-normal">{{ details.payment|number_format(2, '.', ',') }}</span>
+                        </div>
                     </div>
-                </div>
 
-                <div class="card card-body mb-2 bg-dark">
-                    <div class="col fw-bold">
-                        Details:<br>
-                        <span name="details" class="editabletextarea fw-normal d-block px-4">{{ details.details|nl2br }}</span>
+                    <div class="card card-body mb-2 bg-dark">
+                        <div class="col fw-bold">
+                            Details:<br>
+                            <span name="details" class="editabletextarea fw-normal d-block px-4">{{ details.details|nl2br }}</span>
+                        </div>
                     </div>
-                </div>
 
-                {% if admin == true %}
-                <div class="float-end me-2">
-                    <button style="vertical-align: bottom;" type="button" id="edit" class="btn btn-lg btn-primary"><i class="bi bi-pencil-square me-2"></i>Edit</button>
-                    <button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
-                    <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success"/>
-                </div>
+                    {% if admin == true %}
+                    <div class="float-end me-2">
+                        <button type="button" id="edit" class="btn btn-lg btn-primary align-bottom"><i class="bi bi-pencil-square me-2"></i>Edit</button>
+                        <button type="button" id="cancel" class="btn btn-lg btn-danger">Cancel</button>
+                        <input id="submit" type="submit" value="Submit" name="submit" class="btn btn-lg btn-success"/>
+                    </div>
 
-                <div class="text-start ms-2">
-                    <button type="button" data-id="{{ details.id }}" data-type="debt" class="btn btn-lg btn-danger delete"><i class="bi bi-trash align-middle me-2" ></i>Delete</button>                    
+                    <div class="text-start ms-2">
+                        <button type="button" data-id="{{ details.id }}" data-type="debt" class="btn btn-lg btn-danger delete"><i class="bi bi-trash align-middle me-2" ></i>Delete</button>                    
+                    </div>
+                    {% endif %}  
                 </div>
-                {% endif %}  
             </div>
-            <div class="card-body col-12 col-md-6">
-                <h4>Payment History</h4> 
-                <div id="result"></div>
-                <div class="row">
-                    <table class="table-striped bg-dark" id="table"  data-toggle="table" data-show-columns="true" data-search="true" data-check-on-init="true"  data-height="470"
-                    data-pagination="true">
-                        <thead class="bg-primary text-white">
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Counter Party</th>
-                                <th scope="col">Date/Time</th>
-                                <th scope="col">Amount</th>
-                                {% if admin == true %}
-                                <th scope="col">Delete</th>
-                                {% endif %}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for transaction in transactions %}
-                            <tr data-id="{{ transaction.transactionId }}">
-                                <td>{{ transaction.transactionId }}</td>
-                                <td>{{ transaction.counterPartyName }}</td>
-                                <td>{{ transaction.created |date("jS F Y \\a\\t g:ia") }}</td>
-                                <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
-                                {% if admin == true %}
-                                <td style="text-align: center;"><a style="cursor: pointer; vertical-align: bottom;" class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button"><i class="text-danger bi bi-trash"></i>
-                                </a></td>
-                                {% endif %}
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+            <div class="col-12 col-md-6"> 
+                <div class="card-body">
+                    <h4>Payment History</h4> 
+                    <div id="result"></div>
+                    <div class="row">
+                        <table class="table-striped bg-dark" id="table"  data-toggle="table" data-show-columns="true" data-search="true" data-check-on-init="true"  data-height="470"
+                        data-pagination="true">
+                            <thead class="bg-primary text-white">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Counter Party</th>
+                                    <th scope="col">Date/Time</th>
+                                    <th scope="col">Amount</th>
+                                    {% if admin == true %}
+                                    <th scope="col">Delete</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr data-id="{{ transaction.transactionId }}">
+                                    <td>{{ transaction.transactionId }}</td>
+                                    <td>{{ transaction.counterPartyName }}</td>
+                                    <td>{{ transaction.created |date("jS F Y \\a\\t g:ia") }}</td>
+                                    <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
+                                    {% if admin == true %}
+                                    <td class="text-center"><a class="delete" data-type="transaction" data-id="{{ transaction.transactionId }}" type="button"><i class="text-danger bi bi-trash"></i>
+                                    </a></td>
+                                    {% endif %}
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="float-end">
+                        <button type="button" id="new" class="btn btn-lg btn-success mt-2 me-2"><i class="bi bi-file-earmark-plus me-1"></i>New Transaction</button>
+                    </div>
                 </div>
-                
-                <div class="float-end">
-                    <button type="button" id="new" class="btn btn-lg btn-success mt-2 me-2"><i class="bi bi-file-earmark-plus me-1"></i>New Transaction</button>
-                </div>
-                
             </div>
         </div>     
     </div>

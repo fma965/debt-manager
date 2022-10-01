@@ -10,7 +10,7 @@
           <thead class="bg-primary text-white">
             <tr>
               <th>Debt</th>
-              <th>Users</th>
+              <th>Contacts</th>
               <th>Total</th>
               <th>Remaining</th>
               <th>Paid This Month</th>
@@ -63,12 +63,13 @@
   <div class="row p-0 m-0"> 
     {% for user in users %} 
     <div class="col-lg-4 col-sm-6 col-xs-12">
-      <div class="justify-content-between bg-dark p-4 my-2">
-        <a href="/user.php?id={{ user.id }}">
-          <h5>{{ user.name }}</h5>
-        </a>
-        <small>Discord ID: {{ user.discord_id }}</small>
-      </div>
+        <div class="justify-content-between bg-dark p-4 my-2">
+          <img class="me-3 align-bottom rounded-circle float-start" style="height:50px;" src="https://cdn.discordapp.com/avatars/{{ user.discord_id }}/{{ user.avatar }}.jpg"/>
+          <a href="/user.php?id={{ user.id }}">
+            <h5>{{ user.name }}</h5>
+          </a>
+          <small>{{ user.discord_id }}</small>
+        </div>
     </div> 
     {% endfor %} 
   </div>

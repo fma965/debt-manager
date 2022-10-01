@@ -10,7 +10,7 @@
 
     try {
         // Debt Table
-        foreach ($db->safeQuery('SELECT * FROM debts ORDER by ID DESC') as $debt) {
+        foreach ($db->safeQuery('SELECT * FROM debts ORDER by ID ASC') as $debt) {
             foreach ($db->safeQuery('SELECT * FROM user_debts INNER JOIN users ON users.id=user_debts.user_id WHERE debt_id = ?',[$debt['id']]) as $user) {
                 $debt['users'][] = ["name" => $user['name'], "id" => $user['id']];
             }
@@ -28,7 +28,7 @@
         }
 
         // User Table
-        foreach ($db->safeQuery('SELECT * FROM users ORDER by ID DESC') as $user) {
+        foreach ($db->safeQuery('SELECT * FROM users ORDER by ID ASC') as $user) {
             $users[] = $user;
         }
     } catch (Exception $e) {
