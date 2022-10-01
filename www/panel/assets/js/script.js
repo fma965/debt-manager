@@ -58,7 +58,7 @@ $(document).ready(function(){
     });
 });
 
-$("#edit").click(function() {
+$("#editbtn").click(function() {
    $("#placeholder").show();
    
    $('.editablenum').each(function() {
@@ -98,13 +98,15 @@ $("#edit").click(function() {
    });
 
    $("option[value=" + $('.item-name[data-id]').attr("data-id") + "]").attr('selected', 'selected');
+
+   $("#editbtn").hide();
+   $("#deletebtn").hide();
    
-   $("#edit").hide();
-   $("#cancel").show();
+   $("#cancelbtn").show();
    $("#updatebtn").show();
 });
 
-$("#cancel").click(function() {
+$("#cancelbtn").click(function() {
    location.reload();
 });
 
