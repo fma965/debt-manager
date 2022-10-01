@@ -1,9 +1,3 @@
-$(function() {
-    $('#table').bootstrapTable({
-        classes: "table table-striped table-hover"
-      })
-  })
-
 $("#edit").click(function() {
    $("#placeholder").show();
    
@@ -54,31 +48,27 @@ $("#cancel").click(function() {
 });
 
 $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
+    $('#table').bootstrapTable({
+        classes: "table table-striped table-hover"
+    })
 
     $(".action_delete").click(function() {
         var id = $(this).attr("data-id")
         var type = $(this).attr("data-type");
         var reference = $(this).attr("data-reference");
         var amount = $(this).attr("data-amount");
+        var url = (type == "transaction" ? '' : '/admin/') ;
+
         $.ajax({ 
             type: 'POST', 
             url: '/admin/actions/delete.php', 
             data: { id:  id, type: type, reference: reference, amount: amount}, 
             dataType: 'json',
             success: function (data) {                 
-                $("tr[data-id='"+id+"'").remove();
-                if(type == "transaction") {
-                    $('<form action="" method="POST">'+
-                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
-                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
-                    '</form>').appendTo($(document.body)).submit();
-                } else {
-                    $('<form action="/admin/" method="POST">'+
-                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
-                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
-                    '</form>').appendTo($(document.body)).submit();
-                }
+                $('<form action="'+url+'" method="POST">'+
+                '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                '</form>').appendTo($(document.body)).submit();
             },
         });        
     });
@@ -91,17 +81,11 @@ $(document).ready(function(){
             data: $("form#new").serialize() + "&type="+ type, 
             dataType: 'json',
             success: function (data) { 
-                if(type == "transaction") {
-                    $('<form action="" method="POST">'+
-                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
-                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
-                    '</form>').appendTo($(document.body)).submit();
-                } else {
-                    $('<form action="/'+type+'.php?id='+data['id']+'" method="POST">'+
-                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
-                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
-                    '</form>').appendTo($(document.body)).submit();
-                }
+                var url = (type == 'transaction' ? '' : '/'+type+'.php?id='+data['id']);
+                $('<form action="'+url+'" method="POST">'+
+                '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                '</form>').appendTo($(document.body)).submit();
             },
         });        
     });
@@ -114,14 +98,10 @@ $(document).ready(function(){
             data: $("form#update").serialize() + "&type="+ type, 
             dataType: 'json',
             success: function (data) { 
-                if(type == "transaction") {
-                    // 
-                } else {
-                    $('<form action="" method="POST">'+
-                    '<input type="hidden" name="status" value="' + data['status'] + '">'+
-                    '<input type="hidden" name="message" value="' + data['message'] + '">'+
-                    '</form>').appendTo($(document.body)).submit();
-                }
+                $('<form action="" method="POST">'+
+                '<input type="hidden" name="status" value="' + data['status'] + '">'+
+                '<input type="hidden" name="message" value="' + data['message'] + '">'+
+                '</form>').appendTo($(document.body)).submit();
             },
         });        
     });
