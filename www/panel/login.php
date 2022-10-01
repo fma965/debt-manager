@@ -59,10 +59,10 @@
         try {
             $id = $db->single('SELECT discord_id FROM users WHERE discord_id=?',[$result['id']]);
             
-            if (is_numeric($id)) {
+            if (isset($id)) {
                 $db->safeQuery('UPDATE users SET avatar=? WHERE discord_id=?',[$result['avatar'], $result['id']]);
             } else {
-                $db->safeQuery('INSERT INTO users (name, discord_id, avatar) VALUES (?, ?, ?)',[$result['username'], $result['id']], $result['avatar']);
+                $db->safeQuery('INSERT INTO users (name, discord_id, avatar) VALUES (?, ?, ?)',[$result['username'], $result['id'], $result['avatar']]);
             }
 
             if($_SESSION['admin']) {
