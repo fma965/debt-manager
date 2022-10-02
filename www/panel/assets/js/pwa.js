@@ -1,8 +1,17 @@
-window.onload = () => {
-	'use strict';
-  
+window.addEventListener('load', () => {
+	registerSW();
+});
+
+// Register the Service Worker
+async function registerSW() {
 	if ('serviceWorker' in navigator) {
-	  navigator.serviceWorker
-			   .register('/server-worker.js');
+		try {
+			await navigator
+				.serviceWorker
+				.register('/service-worker.js');
+		}
+		catch (e) {
+			console.log('SW registration failed');
+		}
 	}
-  }
+}
