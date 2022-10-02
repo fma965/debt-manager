@@ -3,7 +3,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="color-scheme" content="light dark">
-	
+
+		<link rel="manifest" href="/manifest.json" />
+		<meta name="theme-color" content="#5bc0de"/>
 		<link rel="stylesheet" href="/assets/css/bootstrap-slate.min.css" />
 		<link rel="stylesheet" href="/assets/css/bootstrap-table.min.css"/>
 		<link rel="stylesheet" href="/assets/css/style.css"/>
@@ -24,34 +26,32 @@
 						  </button>		 
 						  <a class="navbar-brand" href="/">💸 Debt Manager</a>		
 					</div>
-						 
-					  <div class="collapse navbar-collapse" id="navbar">
+					<div class="collapse navbar-collapse" id="navbar">
 						<ul class="navbar-nav me-auto mb-2 mb-md-0">
-						  {% if admin == true %}
-						<li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
-						<li class="nav-item"><a href="/admin/new.php?type=user" class="nav-link">New User</a></li>
-						<li class="nav-item"><a href="/admin/new.php?type=debt" class="nav-link">New Debt</a></li>
-						{% endif %}
+							{% if admin == true %}
+							<li class="nav-item"><a href="/admin" class="nav-link">Admin</a></li>
+							<li class="nav-item"><a href="/admin/new.php?type=user" class="nav-link">New User</a></li>
+							<li class="nav-item"><a href="/admin/new.php?type=debt" class="nav-link">New Debt</a></li>
+							{% endif %}
 						</ul>
-					  </div>
+					</div>
 
-					  <div class="dropdown text-end" style="position: absolute;	top: 12px; right: 24px;">
+					<div class="dropdown text-end" style="position: absolute;	top: 12px; right: 24px;">
 						{% if logged_in is empty %}
-						<a href="/login.php"><button class="btn btn-sm navbar-btn btn-info">Log In With Discord &nbsp; <i class="bi bi-box-arrow-in-right text-white align-middle fs-6"></i></button></a>
+						<a href="/login.php"><button class="btn btn-sm navbar-btn btn-info">Discord Login&nbsp; <i class="bi bi-box-arrow-in-right text-white fs-6"></i></button></a>
 						{% else %}
 						<a href="#" class="d-block link-dark text-decoration-none" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="-1000,20">
 							<img src="{{ discord.avatar }}" width="32" height="32" class="rounded-circle">
-						  </a>
+							</a>
 						<ul class="dropdown-menu text-small" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 34px);" data-popper-placement="bottom-end">
-						  <li><a class="dropdown-item" href="/">Profile</a></li>
-						  <li><hr class="dropdown-divider"></li>
-						  <li><a class="dropdown-item" href="/logout.php">Sign out</a></li>
+							<li><a class="dropdown-item" href="/">Profile</a></li>
+							<li><hr class="dropdown-divider"></li>
+							<li><a class="dropdown-item" href="/logout.php">Sign out</a></li>
 						</ul>
 						{% endif %}
-					  </div>
 					</div>
 				</div>
-			  </nav>
+			</nav>
 		</main>
 	    <div class="container-fluid"> 
 			{% include 'parts/status.html.twig' %}

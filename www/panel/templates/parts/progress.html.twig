@@ -1,25 +1,20 @@
-{% set percent = 100 - amount|number_format(2, '.', ',') / start|number_format(2, '.', ',') * 100 %}
-{% set paid = start|number_format(2, '.', ',') - amount|number_format(2, '.', ',') %}
-{% set months_remaining = (amount|number_format(2, '.', ',') / payment|number_format(2, '.', ','))|round(0, 'ceil') %}
-{% set date = amount|number_format(2, '.', ',') / payment|number_format(2, '.', ',') %}
+{% set percent = 100 - (amount|number_format(2, '.', ',')) / (start|number_format(2, '.', ',')) * 100 %}
+{% set paid = (start|number_format(2, '.', ',')) - (amount|number_format(2, '.', ',')) %}
+{% set months_remaining = ((amount|number_format(2, '.', ',')) / (payment|number_format(2, '.', ',')))|round(0, 'ceil') %}
 
 <div class="progress fs-6 fw-bold" style="height: 40px;">
-    <div class="progress-label">£{{ paid }} / £{{ start }} Paid ({{ percent }}%)</div>
-{% if percent >= 90 %}
+  <div class="progress-label">£{{ paid }} / £{{ start }} Paid ({{ percent }}%)</div>
+  {% if percent >= 90 %}
     <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-white" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%"></div>
-{% elseif (percent >= 45) and (percent < 90)  %}
+  {% elseif percent >= 45 and percent < 90 %}
     <div class="progress-bar progress-bar-striped progress-bar-animated bg-info text-white" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%"></div>
-{% elseif (percent >= 30) and (percent < 45)  %}
+  {% elseif percent >= 30 and percent < 45 %}
     <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning text-white" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%"></div>
-{% else %}
+  {% else %}
     <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger text-white" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%"></div>
-{% endif %}
+  {% endif %}
 </div>
-
-<p class="text-center mt-2">Debt should be paid off by <span class="fw-bold text-info">{{ "now"|date_modify("+" ~ months_remaining ~ " month")|date("F Y") }}</span>
-    ({{ months_remaining }}
-{% if months_remaining == 1 %}  
-    month)</p>
-{% else %}
-    months)</p>
-{% endif %}
+<p class="text-center mt-2 mb-0">
+  Debt should be paid off by <span class="fw-bold text-info">{{ 'now'|date_modify('+' ~ months_remaining ~ ' month')|date('F Y') }}</span>
+  ({{ months_remaining }} month{% if months_remaining != 1 %}s{% endif %})
+</p>
