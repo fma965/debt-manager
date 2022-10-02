@@ -16,12 +16,8 @@
     $last = mktime(23,59,59, (date('n') + 1 ), 31, date('Y'));
 
     try {
-        if($_SESSION['admin']) {
-            $details = $db->row('SELECT * FROM debts WHERE id = ?', [$_GET['id']]);
-        } else {
-            foreach ($db->safeQuery('SELECT users.discord_id, debts.* FROM debts INNER JOIN user_debts ON debts.id = user_debts.debt_id INNER JOIN users ON users.id = user_debts.user_id WHERE debts.id = ?', [$_GET['id']]) as $details) {
-                if($details['discord_id'] == $_SESSION['userData']['discord_id']) $authorized = true;
-            }
+        foreach ($db->safeQuery('SELECT users.discord_id, debts.* FROM users INNER JOIN user_debts on users.id = user_debts.user_id RIGHT JOIN debts on debts.id = user_debts.debt_id WHERE debts.id = ?', [$_GET['id']]) as $details) {
+            if($details['discord_id'] == $_SESSION['userData']['discord_id']) $authorized = true;
         }
 
         if(isset($details['reference'])) {
