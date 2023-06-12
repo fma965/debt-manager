@@ -1,9 +1,9 @@
-{% set percent = 100 - (amount|number_format(2, '.', ',')) / (start|number_format(2, '.', ',')) * 100 %}
-{% set paid = (start|number_format(2, '.', ',')) - (amount|number_format(2, '.', ',')) %}
-{% set months_remaining = ((amount|number_format(2, '.', ',')) / (payment|number_format(2, '.', ',')))|round(0, 'ceil') %}
+{% set percent = 100 - (amount / start) * 100 %}
+{% set paid = start - amount %}
+{% set months_remaining = (amount / payment)|round(0, 'ceil') %}
 
 <div class="progress fs-6 fw-bold" style="height: 40px;">
-  <div class="progress-label">£{{ paid }} / £{{ start }} Paid ({{ percent }}%)</div>
+  <div class="progress-label">£{{ paid }} / £{{ start }} Paid ({{ percent|number_format(2, '.', ',') }}%)</div>
   {% if percent >= 90 %}
     <div class="progress-bar progress-bar-striped progress-bar-animated bg-success text-white" role="progressbar" aria-valuenow="{{ percent }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percent }}%"></div>
   {% elseif percent >= 45 and percent < 90 %}
