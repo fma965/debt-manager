@@ -4,6 +4,7 @@ LABEL maintainer="Fma965" \
     description="nginx php-8 games-manager-frontend"
 
 ENV WEB_DOCUMENT_ROOT='/app/panel'
+
 ENV PHP_DATE_TIMEZONE='Europe/London'
 ENV TZ='Europe/London'
 
