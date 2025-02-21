@@ -1,5 +1,5 @@
 <?php
-    require_once '/vendor/autoload.php';
+    require_once '/app/vendor/autoload.php';
     $loader = new \Twig\Loader\FilesystemLoader('/app/panel/templates');
     $twig = new \Twig\Environment($loader);
 
