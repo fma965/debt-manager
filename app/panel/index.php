@@ -12,9 +12,9 @@
             if($_POST['action'] == "update") {
                 try {
                     $db->safeQuery('UPDATE users SET name= ? WHERE discord_id = ?',[$_POST['name'], $_SESSION['userData']['discord_id']]);
-                    $status = MysqlSuccess("Profile");
+                    $status = DBSuccess("Profile");
                 } catch (Exception $e) {
-                    $status = MysqlError("Error updating Profile: " . $e->getMessage());
+                    $status = DBError("Error updating Profile: " . $e->getMessage());
                 }
             }
         }
@@ -29,7 +29,7 @@
                 $details['total_cost'] = $remaining;
             }
         } catch (Exception $e) {
-            $status = MysqlError(template:"main.html.twig");
+            $status = DBError(template:"main.html.twig");
         } 
     }
 

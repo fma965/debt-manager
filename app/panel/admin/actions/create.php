@@ -8,7 +8,7 @@
 				case "user":
 					$db->safeQuery('INSERT INTO users (name, notes) VALUES (?, ?)',[$_POST['name'], $_POST['notes']]);
 		
-					$id = mysqli_insert_id($db);
+					$id = $db->lastInsertId();
 					
 					if(isset($_POST['debts'])) {
 						foreach ($_POST['debts'] as $debt) {	
@@ -20,7 +20,7 @@
 					$db->safeQuery('INSERT INTO debts (debt, reference, start_amount, amount, payment, details) VALUES (?, ?, ?, ?, ?, ?)',[
 						$_POST['name'], $_POST['reference'], $_POST['start_amount'], $_POST['start_amount'], $_POST['payment'], $_POST['details']
 					]);
-					$id = mysqli_insert_id($db);
+					$id = $db->lastInsertId();
 					break;
 				case "transaction":
 					$date = strtotime($_POST['created']);
