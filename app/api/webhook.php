@@ -33,7 +33,7 @@
 				$debt = $db->row('SELECT id, amount FROM debts WHERE reference = ?', [$reference]);
 				if ($debt) {
 					$debt_amount = $debt['amount'] - $amount;
-					/** Update Debt's `lastpaymentdate`, `lastpaymentamount` and `amount` */
+					/** Update Debt's lastpaymentdate, lastpaymentamount and amount */
 					$db->safeQuery('UPDATE debts SET lastpaymentdate=?, lastpaymentamount=?, amount=? WHERE id=?',[$created, $amount, $debt_amount, $debt['id']]);
 				}
 

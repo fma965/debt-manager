@@ -29,7 +29,7 @@
                 $allcontacts[] = $contact;
             }
 
-            foreach ($db->safeQuery('SELECT * FROM `transactions` WHERE `reference` = ? ORDER BY `created` DESC;', [$details['reference']]) as $transaction) {
+            foreach ($db->safeQuery('SELECT * FROM transactions WHERE reference = ? ORDER BY created DESC;', [$details['reference']]) as $transaction) {
                 if ($transaction['created'] > $first && $transaction['created'] < $last) $totalpaidthismonth += $transaction['amount'];
                 $alltransactions[] = $transaction;
             }

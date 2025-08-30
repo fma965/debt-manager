@@ -15,7 +15,7 @@
                 $debt['users'][] = ["name" => $user['name'], "id" => $user['id']];
             }
 
-            foreach ($db->safeQuery('SELECT * FROM transactions WHERE `reference` = ? ORDER BY `created` DESC',[$debt['reference']]) as $transaction) {
+            foreach ($db->safeQuery('SELECT * FROM transactions WHERE reference = ? ORDER BY created DESC',[$debt['reference']]) as $transaction) {
                 if ($transaction['created'] > $first_day && $transaction['created'] < $last_day) $paid += $transaction['amount'];
                 if ($lastpaymentdate == 0) $lastpaymentdate = $transaction['created'];
             }

@@ -29,10 +29,12 @@
         error_reporting(E_ALL);
     }
 
-        // Establish DB connection
-        require "DBClass.php";
-        $db = new DBClass(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-        if ($db->connect_error) {
-                die("Connection failed: " . $db->connect_error);
-        }
+     // Establish DB connection
+     require "DBClass.php";
+     try {
+         $db = new DBClass(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+     } catch (Exception $e) {
+         // Die with the connection error message.
+         die($e->getMessage());
+     }
 ?>
