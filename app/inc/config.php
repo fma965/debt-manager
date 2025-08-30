@@ -8,6 +8,7 @@
     define('HOST',                                  getenv('APP_HOST'));
 
     // Database Credentials
+    define('DB_TYPE',                               getenv('DB_TYPE'));
     define('DB_HOST',                               getenv('DB_HOST'));
     define('DB_USER',                               getenv('DB_USER'));
     define('DB_PASS',                               getenv('DB_PASS'));
@@ -29,12 +30,11 @@
         error_reporting(E_ALL);
     }
 
-     // Establish DB connection
-     require "DBClass.php";
-     try {
-         $db = new DBClass(DB_HOST, DB_USER, DB_PASS, DB_NAME);
-     } catch (Exception $e) {
-         // Die with the connection error message.
-         die($e->getMessage());
-     }
+    // Establish DB connection
+    require "DBClass.php";
+    try {
+        $db = new DBClass(DB_TYPE, DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    } catch (Exception $e) {
+        die($e->getMessage());
+    }
 ?>

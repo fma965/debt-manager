@@ -1,75 +1,76 @@
 <?php
 
-class DB
-{
-    private $pdo;
+class DBClass extends PDO {
+    public function __construct($db_type, $db_host, $db_user = null, $db_pass = null, $db_name = null) {
+        $dsn = "";
+        
+        // Use a switch statement to construct the DSN based on the database type.
+        switch ($db_type) {
+            case 'pgsql':
+                // DSN for PostgreSQL
+                $dsn = "pgsql:host={$db_host};dbname={$db_name}";
+                break;
+            case 'mysql':
+            default:
+                // DSN for MariaDB/MySQL
+                $dsn = "mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
+                break;
+        }
 
-    public function __construct()
-    {
-        // Include the configuration file
-        require_once __DIR__ . '/../../config.php';
-
-        $dsn = '';
-        $user = '';
-        $pass = '';
-
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        ];
+        
         try {
-            // Configure the connection based on the selected driver
-            if (DB_DRIVER === 'mysql') {
-                $dsn = 'mysql:host=' . MYSQL_HOST . ';dbname=' . MYSQL_DB . ';charset=utf8mb4';
-                $user = MYSQL_USER;
-                $pass = MYSQL_PASS;
-            } elseif (DB_DRIVER === 'pgsql') {
-                $dsn = 'pgsql:host=' . PGSQL_HOST . ';dbname=' . PGSQL_DB;
-                $user = PGSQL_USER;
-                $pass = PGSQL_PASS;
-            } else {
-                throw new Exception("Unsupported database driver selected.");
-            }
-
-            // PDO connection options
-            $options = [
-                PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Throw exceptions on errors
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,       // Fetch associative arrays
-                PDO::ATTR_EMULATE_PREPARES   => false,                  // Use native prepared statements
-            ];
-
-            // Create the PDO instance
-            $this->pdo = new PDO($dsn, $user, $pass, $options);
-
+            parent::__construct($dsn, $db_user, $db_pass, $options);
         } catch (PDOException $e) {
-            // You should handle this more gracefully in a real application
-            throw new PDOException($e->getMessage(), (int)$e->getCode());
+            throw new Exception("Connection failed: " . $e->getMessage());
         }
     }
 
     /**
-     * Executes a prepared statement and returns the result.
+     * Executes a prepared statement and returns the results.
      *
-     * @param string $sql The SQL query to execute.
-     * @param array $params The parameters to bind to the query.
-     * @return PDOStatement The executed PDOStatement object.
+     * @param string $sql SQL query with positional placeholders (e.g., SELECT * FROM users WHERE Id=?).
+     * @param array $params An array of parameters to be bound.
+     * @return array|null An array of all fetched rows, or null if no results were produced.
      */
-    public function safeQuery(string $sql, array $params = [])
-    {
-        // Prepare the statement
-        $stmt = $this->pdo->prepare($sql);
-        // Execute with parameters
+    public function safeQuery(string $sql, array $params = []): ?array {
+        $stmt = $this->prepare($sql);
         $stmt->execute($params);
-        // Return the statement object to be iterated over (e.g., with foreach)
-        return $stmt;
+        
+        if ($stmt->columnCount() > 0) {
+            return $stmt->fetchAll(PDO::FETCH_BOTH);
+        }
+        
+        return null;
     }
 
     /**
-     * Helper to get the ID of the last inserted row.
+     * Executes a prepared statement and returns a single row.
      *
-     * @return string|false
+     * @param string $sql SQL query.
+     * @param array $params An array of parameters.
+     * @return array The first row as an array, or an empty array if no results.
      */
-    public function lastInsertId()
-    {
-        return $this->pdo->lastInsertId();
+    public function row(string $sql, array $params = []): array {
+        $stmt = $this->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetch(PDO::FETCH_BOTH) ?? [];
+    }
+
+    /**
+     * Executes a prepared statement and returns a single value from the first row.
+     *
+     * @param string $sql SQL query.
+     * @param array $params An array of parameters.
+     * @return mixed The first value of the first row, or null if no results.
+     */
+    public function single(string $sql, array $params = []) {
+        $stmt = $this->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn(0);
     }
 }
-
-// Example instantiation
-// $db = new DB();
