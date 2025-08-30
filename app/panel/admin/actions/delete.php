@@ -13,7 +13,7 @@
 					$db->safeQuery('DELETE FROM debts WHERE id=?',[$_POST['id']]);
 					break;
 				case "transaction":
-					$db->safeQuery('DELETE FROM transactions WHERE transactionId=?',[$_POST['id']]);
+					$db->safeQuery('DELETE FROM transactions WHERE transaction_id=?',[$_POST['id']]);
 	
 					$lastTransaction = $db->row('SELECT * FROM transactions WHERE reference = ? ORDER BY created DESC LIMIT 1;', [$_POST['reference']]);
 					

@@ -36,7 +36,7 @@
         }
 
     } catch (Exception $e) {
-        $status = MysqlError(template:"main.html.twig");
+        $status = DBError(template:"main.html.twig");
     } 
 
     if($authorized) {

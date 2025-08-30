@@ -16,7 +16,7 @@
 		}
 	}
 
-	function MysqlError($message = "", $template = "parts/status.html.twig") {
+	function DBError($message = "", $template = "parts/status.html.twig") {
 		global $twig, $e;
 		$status = ['status' => 'error', 'message' => $message == "" ? "Error: " . $e->getMessage() : $message];
 		if($template == "parts/status.html.twig") return $status;
@@ -24,7 +24,7 @@
 		exit;
 	}
 
-	function MysqlSuccess($type = "record") {
+	function DBSuccess($type = "record") {
 		$message = $type . " updated successfully";
 		$status = ['status' => 'success', 'message' => $message];
 		return $status;

@@ -25,8 +25,8 @@
 				case "transaction":
 					$date = strtotime($_POST['created']);
 					
-					$db->safeQuery('INSERT INTO transactions (transactionId, currency, amount, created, reference, counterPartyName) VALUES (?, ?, ?, ?, ?, ?)',[
-						$_POST['transactionId'], 'GBP', $_POST['amount'], $date, $_POST['reference'], $_POST['counterPartyName']
+					$db->safeQuery('INSERT INTO transactions (transaction_id, currency, amount, created, reference, counter_party_name) VALUES (?, ?, ?, ?, ?, ?)',[
+						$_POST['transaction_id'], 'GBP', $_POST['amount'], $date, $_POST['reference'], $_POST['counter_party_name']
 					]);
 						
 					$db->safeQuery('UPDATE debts SET amount=amount - ?, lastpaymentdate=?, lastpaymentamount=? WHERE reference=?',[$_POST['amount'], $date, $_POST['amount'], $_POST['reference']]);

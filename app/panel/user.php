@@ -25,7 +25,7 @@
             $details['total_cost'] = $remaining;
         }
     } catch (Exception $e) {
-        $status = MysqlError(template:"main.html.twig");
+        $status = DBError(template:"main.html.twig");
     }
     echo $twig->render('user.html.twig', ['alldebts' => $alldebts, 'debts' => $debts, 'details' => $details, 'status' => $status]); 
 ?>

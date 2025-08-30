@@ -26,7 +26,7 @@
 			$amount = number_format($trans['content']['amount']['minorUnits']/100, 2, ".", "");
 			$reference = trim(strtolower($trans['content']['reference']));
 			$created = strtotime($trans['content']["transactionTime"]);
-			$counterPartyName = $trans['content']["counterPartyName"];
+			$counter_party_name = $trans['content']["counter_party_name"];
 			
 			/** Get Debt ID from Database using Reference */
 			try {
@@ -39,8 +39,8 @@
 
 				/** Insert transaction in to database */
 
-				$db->safeQuery('INSERT INTO transactions (transactionId, currency, amount, created, reference, counterPartyName) VALUES (?, ?, ?, ?, ?, ?)',[
-					$transaction_id, $currency, $amount, $created, $reference, $counterPartyName
+				$db->safeQuery('INSERT INTO transactions (transaction_id, currency, amount, created, reference, counterPartyName) VALUES (?, ?, ?, ?, ?, ?)',[
+					$transaction_id, $currency, $amount, $created, $reference, $counter_party_name
 				]);
 			} catch (Exception $e) {
 				http_response_code(500);
