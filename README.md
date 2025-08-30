@@ -2,19 +2,20 @@
 A custom written Debt Manager, not really ready for sharing but may aswell share it anyway, it uses the reference of the transaction to match payments using the Starling Bank API
 
 ### Requirements
-- Mysql/Maria Database
+- MySQL/MariaDB or Postgres Database
 - Starling (UK Bank) Developer Account
 - Discord App (OAuth)
 
 ### Configuration
 |        Parameter        | Required |  Type  | Default |                                            Description                                             |
 | :---------------------: | :------: | :----: | :-----: | :------------------------------------------------------------------------------------------------: |
-|        APP_HOST         |   yes    | string |    -    |                                      The URL to this service                                       |
+|        APP_HOST         |   yes    | string |    -    |                                       The URL to this service                                      |
 |                         |          |        |         |                                                                                                    |
-|         DB_HOST         |   yes    | string |    -    |                                         Mysql/MariaDB Host                                         |
-|         DB_NAME         |   yes    | string |    -    |                                         Mysql/MariaDB Name                                         |
-|         DB_USER         |   yes    | string |    -    |                                       Mysql/MariaDB Username                                       |
-|         DB_PASS         |   yes    | string |    -    |                                       Mysql/MariaDB Password                                       |
+|         DB_TYPE         |   yes    | string |    -    |                                           'mysql' or 'pgsql'                                       |
+|         DB_HOST         |   yes    | string |    -    |                                             Database Host                                          |
+|         DB_NAME         |   yes    | string |    -    |                                             Database Name                                          |
+|         DB_USER         |   yes    | string |    -    |                                           Database Username                                        |
+|         DB_PASS         |   yes    | string |    -    |                                           Database Password                                        |
 |                         |          |        |         |                                                                                                    |
 | STARLING_WEBHOOK_SECRET |   yes    | string |    -    | [Starling Bank - Personal Access V2 Webhook Key](https://developer.starlingbank.com/personal/list) |
 |                         |          |        |         |                                                                                                    |
