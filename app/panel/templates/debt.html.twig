@@ -104,13 +104,13 @@
                             </thead>
                             <tbody>
                                 {% for transaction in transactions %}
-                                <tr data-id="{{ transaction.transactionId }}">
-                                    <td>{{ transaction.transactionId }}</td>
-                                    <td>{{ transaction.counterPartyName }}</td>
+                                <tr data-id="{{ transaction.transaction_id }}">
+                                    <td>{{ transaction.transaction_id }}</td>
+                                    <td>{{ transaction.counter_party_name }}</td>
                                     <td>{{ transaction.created |date("jS F Y") }}<br>{{ transaction.created |date("g:ia") }}</td>
                                     <td >£{{ transaction.amount|number_format(2, '.', ',') }}</td>
                                     {% if admin == true %}
-                                    <td class="text-center"><a class="action_delete" data-type="transaction" data-amount="{{ transaction.amount|number_format(2, '.', ',') }}" data-reference="{{ details.reference }}" data-id="{{ transaction.transactionId }}" type="button"><i class="text-danger bi bi-trash"></i>
+                                    <td class="text-center"><a class="action_delete" data-type="transaction" data-amount="{{ transaction.amount|number_format(2, '.', ',') }}" data-reference="{{ details.reference }}" data-id="{{ transaction.transaction_id }}" type="button"><i class="text-danger bi bi-trash"></i>
                                     </a></td>
                                     {% endif %}
                                 </tr>

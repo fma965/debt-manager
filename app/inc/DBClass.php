@@ -57,8 +57,11 @@ class DBClass extends PDO {
      */
     public function row(string $sql, array $params = []): array {
         $stmt = $this->prepare($sql);
-        $stmt->execute($params);
-        return $stmt->fetch(PDO::FETCH_BOTH) ?? [];
+        if ($stmt === false || !$stmt->execute($params)) {
+            return [];
+        }
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result !== false ? $result : [];
     }
 
     /**
