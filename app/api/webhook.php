@@ -30,7 +30,7 @@
 			
 			/** Get Debt ID from Database using Reference */
 			try {
-				$debt = $db->row('SELECT id, amount FROM debts WHERE reference = ?', [$reference]);
+				$debt = $db->row('SELECT id, amount FROM debts WHERE LOWER(reference) = ?', [strtolower($reference)]);
 				if ($debt) {
 					$debt_amount = $debt['amount'] - $amount;
 					/** Update Debt's lastpaymentdate, lastpaymentamount and amount */
@@ -40,7 +40,7 @@
 				/** Insert transaction in to database */
 
 				$db->safeQuery('INSERT INTO transactions (transaction_id, currency, amount, created, reference, counter_party_name) VALUES (?, ?, ?, ?, ?, ?)',[
-					$transaction_id, $currency, $amount, $created, $reference, $counter_party_name
+					$transaction_id, $currency, $amount, $created, strtolower($reference), $counter_party_name
 				]);
 			} catch (Exception $e) {
 				error_log($e);
