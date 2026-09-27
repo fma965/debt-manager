@@ -10,6 +10,9 @@
     $status['message'] = isset($_REQUEST['message']) ? $_REQUEST['message'] : "";
     $twig->addGlobal('status', $status);
 
+    $version = @file_get_contents('/app/VERSION');
+    $twig->addGlobal('version', $version !== false ? trim($version) : 'dev');
+
     session_start();
 
     $script_name = basename($_SERVER['PHP_SELF']);

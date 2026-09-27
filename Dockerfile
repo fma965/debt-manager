@@ -8,7 +8,10 @@ ENV WEB_DOCUMENT_ROOT='/app/panel'
 ENV PHP_DATE_TIMEZONE='Europe/London'
 ENV TZ='Europe/London'
 
+ARG APP_VERSION=dev
+
 COPY /app/ /app/
+RUN echo "$APP_VERSION" > /app/VERSION
 COPY api.conf /opt/docker/etc/nginx/conf.d/api.conf
 
 RUN composer install -d /app
