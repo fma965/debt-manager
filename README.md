@@ -25,5 +25,5 @@ A custom written Debt Manager, not really ready for sharing but may aswell share
 |                         |          |        |         |                                                                                                    |
 |          DEBUG          |    no    |  bool  |    -    |                                     Enables PHP debug logging                                      |
 ### Notes
-- The Starling Webhook endpoint runs on port 81 not port 80 at /webhook.php, expose this to a unprotected API that Starling IP's are able to access, for example api.domain.tld
+- The Starling Webhook endpoint runs on port 8081 not port 8080 at /webhook.php, expose this to a unprotected API that Starling IP's are able to access, for example api.domain.tld
 - This code is terrible, this was one of my first ever from scratch PHP projects which i then adapted to use Twig. No warranty etc etc, I did start rewriting this with Laravel but i never got to completing it and to be honest this works for what i wanted so i had no motivation to continue it.
